@@ -10,6 +10,7 @@ public class Skill : MonoBehaviour
     public bool CanAttack => canAttack;
     private bool canPotion = true;
     public bool CanPotion => canPotion;
+    private bool canTransform = true;
 
     private void Awake()
     {
@@ -45,6 +46,11 @@ public class Skill : MonoBehaviour
                 UsePotion();
             }
         }
+
+        if (Keyboard.current.tKey.wasPressedThisFrame)
+        {
+            testanimator();
+        }
     }
 
     private void attack()
@@ -70,6 +76,21 @@ public class Skill : MonoBehaviour
         
     }
 
+    private void testanimator()
+    {
+        canAttack = false;
+        if (canTransform)
+        { 
+            animator.SetBool("test", true);
+            canTransform = false;
+        }
+        else
+        { 
+            animator.SetBool("test", false);
+            canTransform = true;
+        }
+    }
+
     private void CheckCanAttack()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -84,5 +105,14 @@ public class Skill : MonoBehaviour
         {
             canPotion = true; // 
         }
+        if (stateInfo.IsName("Blades2Sword_Transform_01_Inplace") && stateInfo.normalizedTime >= 0.9f)
+        {
+            canAttack = true; // 
+        }
+
+
     }
+
+    
+    
 }

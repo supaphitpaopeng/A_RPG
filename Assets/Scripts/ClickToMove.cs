@@ -13,6 +13,7 @@ public class ClickToMove : MonoBehaviour
     NavMeshAgent agent;
     Camera mainCamera;
     Animator animator;
+    Skill skill;
 
     private void Awake()
     {
@@ -20,11 +21,13 @@ public class ClickToMove : MonoBehaviour
         mainCamera = Camera.main;
         animator = GetComponent<Animator>();
         agent.stoppingDistance = stoppingDistanse;
+        skill = GetComponent<Skill>();
     }
 
     private void HandleMouseMovement()
     {
         if (Mouse.current == null) return;
+        if (skill != null && (!skill.CanAttack || !skill.CanPotion)) return;
         if (Mouse.current.leftButton.isPressed)
         {
             Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
@@ -61,6 +64,19 @@ public class ClickToMove : MonoBehaviour
             {
                 animator.SetBool("isWalking", false);
             }
+        }
+    }
+
+    public void StopMovement()
+    {
+        if (agent != null)
+        {
+            agent.ResetPath();
+            agent.velocity = Vector3.zero;
+        }
+        if (animator != null)
+        {
+            animator.SetBool("isWalking", false);
         }
     }
 }

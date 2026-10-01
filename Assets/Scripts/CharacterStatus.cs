@@ -25,4 +25,33 @@ public class CharacterStatus : MonoBehaviour
         }
         Debug.Log($"Healed {amount} points. Current Health: {currentHealth}/{maxHealth}");
     }
+
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Debug.Log("Character is dead.");
+            // You can add death logic here, like triggering an animation or disabling the character.
+        }
+        else
+        {
+            Debug.Log($"Took {amount} damage. Current Health: {currentHealth}/{maxHealth}");
+        }
+    }
+
+    public void UseMana(float amount)
+    {
+        currentMana -= amount;
+        if (currentMana < 0)
+        {
+            currentMana = 0;
+            Debug.Log("Not enough mana.");
+        }
+        else
+        {
+            Debug.Log($"Used {amount} mana. Current Mana: {currentMana}/{maxMana}");
+        }
+    }
 }

@@ -9,6 +9,7 @@ public class ClickToMove : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float stoppingDistanse = 0.2f;
 
+
     NavMeshAgent agent;
     Camera mainCamera;
     Animator animator;
@@ -31,6 +32,7 @@ public class ClickToMove : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, 200f, groundLayer))
             {
                 agent.SetDestination(hit.point);
+                animator.SetBool("isWalking", true);
             }
         }
     }
@@ -43,5 +45,22 @@ public class ClickToMove : MonoBehaviour
     void Update()
     {
         HandleMouseMovement();
+        UpdateAnimator();
+    }
+
+    private void UpdateAnimator()
+    {
+        if(agent.pathPending)
+        {
+            return;
+        }
+        
+        if(agent.remainingDistance <= agent.stoppingDistance)
+        {
+            if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+            {
+                animator.SetBool("isWalking", false);
+            }
+        }
     }
 }

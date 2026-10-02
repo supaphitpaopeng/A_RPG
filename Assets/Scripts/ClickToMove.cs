@@ -28,16 +28,32 @@ public class ClickToMove : MonoBehaviour
     {
         if (Mouse.current == null) return;
         if (skill != null && (!skill.CanAttack || !skill.CanPotion)) return;
-        if (Mouse.current.leftButton.isPressed)
-        {
-            Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
-            Ray ray = mainCamera.ScreenPointToRay(mouseScreenPosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 200f, groundLayer))
+        
+            if (Mouse.current.leftButton.isPressed)
             {
-                agent.SetDestination(hit.point);
-                animator.SetBool("isWalking", true);
+                Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
+                Ray ray = mainCamera.ScreenPointToRay(mouseScreenPosition);
+                if (Physics.Raycast(ray, out RaycastHit hit, 200f, groundLayer))
+                {
+                    agent.SetDestination(hit.point);
+                    if (skill.IsTwinBladeActive)
+                    {
+                        animator.SetBool("isWalking", true);
+                    Debug.Log("Twin Blade Walking");
+                    }
+                    else if (skill.IsDualSwordsActive)
+                    {
+                        animator.SetBool("D_isWalking", true);
+                    Debug.Log("Dual Swords Walking");
+                }
+                    
+                    
+                }
+                
             }
-        }
+        
+        
+
     }
 
     void Start()
@@ -64,6 +80,7 @@ public class ClickToMove : MonoBehaviour
             {
                 animator.SetBool("isWalking", false);
                 //Debug.Log("StopWalking");
+                animator.SetBool("D_isWalking", false);
             }
         }
     }
@@ -78,7 +95,7 @@ public class ClickToMove : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("isWalking", false);
-            
+            animator.SetBool("D_isWalking", false);
         }
     }
 }

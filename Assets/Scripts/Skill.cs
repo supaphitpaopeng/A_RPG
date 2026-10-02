@@ -32,8 +32,9 @@ public class Skill : MonoBehaviour
     void Update()
     {
         keydownskill();
-        CheckCanAttack();
-        //Debug.Log($"CanAttack: {canAttack}, CanPotion: {canPotion}");
+        
+        Debug.Log($"CanAttack: {canAttack}, CanPotion: {canPotion}");
+
 
     }
 
@@ -49,7 +50,7 @@ public class Skill : MonoBehaviour
                 }
                 else if (isDualSwordsActive)
                 {
-                    Debug.Log("Dual Swords Attack");
+                    attackDualSwords();
                 }
                 
             }
@@ -67,22 +68,6 @@ public class Skill : MonoBehaviour
         {
             Debug.Log($"CanTransform: {canTransform}, IsDualSwordsActive: {isDualSwordsActive}, IsTwinBladeActive: {isTwinBladeActive}");
         }
-
-        if (Keyboard.current.eKey.wasPressedThisFrame)
-        {
-            if (canAttack && canPotion)
-            {
-                if (isTwinBladeActive)
-                {
-                    TwinBladeSkillE();
-                }
-                else if (isDualSwordsActive)
-                {
-                    Debug.Log("Dual Swords Skill E");
-                }
-            }
-        }
-
         if (Keyboard.current.qKey.wasPressedThisFrame)
         {
             if (canAttack && canPotion)
@@ -98,6 +83,22 @@ public class Skill : MonoBehaviour
             }
         }
 
+        if (Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            if (canAttack && canPotion)
+            {
+                if (isTwinBladeActive)
+                {
+                    TwinBladeSkillE();
+                }
+                else if (isDualSwordsActive)
+                {
+                    DualSwordsSkillE();
+                }
+            }
+        }
+
+
         if (Keyboard.current.zKey.wasPressedThisFrame)
         {
             if (canAttack && canPotion)
@@ -108,7 +109,7 @@ public class Skill : MonoBehaviour
                 }
                 else if (isDualSwordsActive)
                 {
-                    Debug.Log("Dual Swords Skill Z");
+                    DualSwordsSkillZ();
                 }
             }
         }
@@ -123,7 +124,7 @@ public class Skill : MonoBehaviour
                 }
                 else if (isDualSwordsActive)
                 {
-                    Debug.Log("Dual Swords Skill X");
+                    DualSwordsSkillX();
                 }
             }
         }
@@ -138,7 +139,7 @@ public class Skill : MonoBehaviour
                 }
                 else if (isDualSwordsActive)
                 {
-                    Debug.Log("Dual Swords Skill C");
+                    DualSwordsSkillC();
                 }
             }
         }
@@ -146,7 +147,7 @@ public class Skill : MonoBehaviour
 
     private void attackTwinBlade()
     {
-        canAttack = false; 
+        
         if (clickToMove != null)
         {
             clickToMove.StopMovement();
@@ -163,15 +164,6 @@ public class Skill : MonoBehaviour
             clickToMove.StopMovement();
         }
         animator.SetTrigger("T_Attack_E");
-    }
-    private void TwinBladeSkillQ()
-    {
-        canAttack = false;
-        if (clickToMove != null)
-        {
-            clickToMove.StopMovement();
-        }
-        animator.SetTrigger("T_Attack_Q");
     }
     private void TwinBladeSkillZ()
     {
@@ -201,6 +193,52 @@ public class Skill : MonoBehaviour
         animator.SetTrigger("T_Attack_C");
     }
 
+    private void attackDualSwords()
+    {
+        if (clickToMove != null)
+        {
+            clickToMove.StopMovement();
+        }
+
+        animator.SetTrigger("D_Attack1");
+    }
+    private void DualSwordsSkillE()
+    {
+        canAttack = false;
+        if (clickToMove != null)
+        {
+            clickToMove.StopMovement();
+        }
+        animator.SetTrigger("D_Attack_E");
+    }
+    private void DualSwordsSkillZ()
+    {
+        canAttack = false;
+        if (clickToMove != null)
+        {
+            clickToMove.StopMovement();
+        }
+        animator.SetTrigger("D_Attack_Z");
+    }
+    private void DualSwordsSkillX()
+    {
+        canAttack = false;
+        if (clickToMove != null)
+        {
+            clickToMove.StopMovement();
+        }
+        animator.SetTrigger("D_Attack_X");
+    }
+    private void DualSwordsSkillC()
+    {
+        canAttack = false;
+        if (clickToMove != null)
+        {
+            clickToMove.StopMovement();
+        }
+        animator.SetTrigger("D_Attack_C");
+    }
+
     private void UsePotion()
     {
         canPotion = false;
@@ -210,7 +248,6 @@ public class Skill : MonoBehaviour
         }
         characterStatus.Heal(50f);
         animator.SetTrigger("Potion");
-        
     }
 
     private void Transform()
@@ -218,19 +255,16 @@ public class Skill : MonoBehaviour
         
         if (!isDualSwordsActive && isTwinBladeActive)
         { 
-            animator.SetBool("test", true);
+            animator.SetBool("Transform", true);
             canTransform = false;
             clickToMove.StopMovement();
-            canAttack = false;
-
             Debug.Log("Transforming to Dual Swords");
         }
         else
         { 
-            animator.SetBool("test", false);
+            animator.SetBool("Transform", false);
             canTransform = true;
             clickToMove.StopMovement();
-            canAttack = false;
         }
     }
 
@@ -242,7 +276,6 @@ public class Skill : MonoBehaviour
         if (twinBladeObject != null) twinBladeObject.SetActive(true);
         isDualSwordsActive = false;
         isTwinBladeActive = true;
-        canAttack = true;
     }
 
     public void EquipDualSwords()
@@ -252,56 +285,24 @@ public class Skill : MonoBehaviour
         if (rightSwordsObject != null) rightSwordsObject.SetActive(true);
         if (twinBladeObject != null) twinBladeObject.SetActive(false);
         isDualSwordsActive = true;
-        isTwinBladeActive = false;
+        isTwinBladeActive = false;  
+    }
+
+    public void ActivateCanAttack()
+    {
+        canAttack = false;
+    }
+    public void ResetCanAttack()
+    {
         canAttack = true;
     }
-
-    private void CheckCanAttack()
+    public void ActivateCanPotion()
     {
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        //Debug.Log($"Current State: {stateInfo.fullPathHash}, Normalized Time: {stateInfo.normalizedTime}");
-
-        // เช็คว่าถ้าเข้าสู่ State "Attack" แล้ว และเล่นจบครบ 1 รอบ (normalizedTime >= 1.0f)
-        if (stateInfo.IsName("Attack_1") && stateInfo.normalizedTime >= 0.9f)
-        {
-            canAttack = true; // 
-        }
-        if (stateInfo.IsName("Action_A_4_1") && stateInfo.normalizedTime >= 0.9f)
-        {
-            canPotion = true; // 
-        }
-        if (stateInfo.IsName("T_Attack_Q_Transform") && stateInfo.normalizedTime >= 0.9f)
-        {
-            canAttack = true; // 
-        }
-        if (stateInfo.IsName("D_Attack_Q_Transform") && stateInfo.normalizedTime >= 0.9f)
-        {
-            canAttack = true; // 
-        }
-        if (stateInfo.IsName("T_Attack_E") && stateInfo.normalizedTime >= 0.9f)
-        {
-            canAttack = true; // 
-        }
-        if (stateInfo.IsName("T_Attack_Q") && stateInfo.normalizedTime >= 0.9f)
-        {
-            canAttack = true; // 
-        }
-        if (stateInfo.IsName("T_Attack_Z") && stateInfo.normalizedTime >= 0.9f)
-        {
-            canAttack = true; // 
-        }
-        if (stateInfo.IsName("T_Attack_X") && stateInfo.normalizedTime >= 0.9f)
-        {
-            canAttack = true; // 
-        }
-        if (stateInfo.IsName("T_Attack_C") && stateInfo.normalizedTime >= 0.9f)
-        {
-            canAttack = true; // 
-        }
-
-
+        canPotion = false;
+    }
+    public void ResetCanPotion()
+    {
+        canPotion = true;
     }
 
-    
-    
 }

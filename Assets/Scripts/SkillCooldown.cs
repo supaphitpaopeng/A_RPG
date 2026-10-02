@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro; // รองรับ TextMeshPro
 
 public class SkillCooldown : MonoBehaviour, IPointerClickHandler
 {
     [Header("UI Component")]
     public Image cooldownImage;
+    [Tooltip("ใส่ Text หรือ TextMeshPro เพื่อแสดงตัวเลขนับถอยหลัง")]
+    public Text cooldownText;
+    public TMP_Text cooldownTMP;
 
     [Header("Cooldown Settings")]
     public float cooldownTime = 5f;
@@ -32,6 +36,10 @@ public class SkillCooldown : MonoBehaviour, IPointerClickHandler
                 }
             }
         }
+
+        // ค้นหา Text ตัวลูกให้อัตโนมัติ
+        if (cooldownText == null) cooldownText = GetComponentInChildren<Text>();
+        if (cooldownTMP == null) cooldownTMP = GetComponentInChildren<TMP_Text>();
     }
 
     void Start()
@@ -40,6 +48,9 @@ public class SkillCooldown : MonoBehaviour, IPointerClickHandler
         {
             cooldownImage.fillAmount = 0f;
         }
+
+        // ซ่อนข้อความคูลดาวน์ตอนเริ่มเกม
+        UpdateCooldownText("");
     }
 
     void Update()
@@ -56,7 +67,7 @@ public class SkillCooldown : MonoBehaviour, IPointerClickHandler
             }
             catch
             {
-                // ป้องกัน Crash กรณีพิมพ์ชื่อปุ่มผิด
+                // ป้องกันกรณีพิมพ์ชื่อคีย์ผิด
             }
         }
 
@@ -69,6 +80,9 @@ public class SkillCooldown : MonoBehaviour, IPointerClickHandler
                 cooldownImage.fillAmount = currentCooldownTimer / cooldownTime;
             }
 
+            // อัปเดตตัวเลขนับถอยหลัง (แสดงทศนิยม 1 ตำแหน่ง เช่น 4.2)
+            UpdateCooldownText(Mathf.Max(0, currentCooldownTimer).ToString("F1"));
+
             if (currentCooldownTimer <= 0f)
             {
                 isCooldown = false;
@@ -78,8 +92,17 @@ public class SkillCooldown : MonoBehaviour, IPointerClickHandler
                 {
                     cooldownImage.fillAmount = 0f;
                 }
+
+                // เคลียร์ข้อความออกเมื่อคูลดาวน์เสร็จ
+                UpdateCooldownText("");
             }
         }
+    }
+
+    private void UpdateCooldownText(string text)
+    {
+        if (cooldownText != null) cooldownText.text = text;
+        if (cooldownTMP != null) cooldownTMP.text = text;
     }
 
     public void UseSkill()
@@ -95,6 +118,8 @@ public class SkillCooldown : MonoBehaviour, IPointerClickHandler
         {
             cooldownImage.fillAmount = 1f;
         }
+
+        UpdateCooldownText(cooldownTime.ToString("F1"));
     }
 
     public void OnPointerClick(PointerEventData eventData)

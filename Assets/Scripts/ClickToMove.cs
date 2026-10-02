@@ -63,6 +63,7 @@ public class ClickToMove : MonoBehaviour
             if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
             {
                 animator.SetBool("isWalking", false);
+                //Debug.Log("StopWalking");
             }
         }
     }
@@ -77,6 +78,7 @@ public class ClickToMove : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("isWalking", false);
+            
         }
     }
 }

@@ -11,6 +11,12 @@ public class Skill : MonoBehaviour
     private bool canPotion = true;
     public bool CanPotion => canPotion;
     private bool canTransform = true;
+    [Header("Weapon GameObjects")]
+    [SerializeField] private GameObject leftSwordsObject;
+    [SerializeField] private GameObject rightSwordsObject;
+    [SerializeField] private GameObject twinBladeObject;
+    private bool isDualSwordsActive = false;
+    private bool isTwinBladeActive = true;
 
     private void Awake()
     {
@@ -79,16 +85,38 @@ public class Skill : MonoBehaviour
     private void testanimator()
     {
         canAttack = false;
-        if (canTransform)
+        if (!isDualSwordsActive && isTwinBladeActive)
         { 
             animator.SetBool("test", true);
             canTransform = false;
+           
+            Debug.Log("Transforming to Dual Swords");
         }
         else
         { 
             animator.SetBool("test", false);
             canTransform = true;
         }
+    }
+
+    public void EquipTwinBlade()
+    {
+        Debug.Log("Equipping Twin Blade");
+        if (leftSwordsObject != null) leftSwordsObject.SetActive(false);
+        if (rightSwordsObject != null) rightSwordsObject.SetActive(false);
+        if (twinBladeObject != null) twinBladeObject.SetActive(true);
+        isDualSwordsActive = false;
+        isTwinBladeActive = true;
+    }
+
+    public void EquipDualSwords()
+    {
+        Debug.Log("Equipping Dual Swords");
+        if (leftSwordsObject != null) leftSwordsObject.SetActive(true);
+        if (rightSwordsObject != null) rightSwordsObject.SetActive(true);
+        if (twinBladeObject != null) twinBladeObject.SetActive(false);
+        isDualSwordsActive = true;
+        isTwinBladeActive = false;
     }
 
     private void CheckCanAttack()
@@ -105,7 +133,7 @@ public class Skill : MonoBehaviour
         {
             canPotion = true; // 
         }
-        if (stateInfo.IsName("Blades2Sword_Transform_01_Inplace") && stateInfo.normalizedTime >= 0.9f)
+        if (stateInfo.IsName("Blades2Sword_Transform_01_Root") && stateInfo.normalizedTime >= 0.9f)
         {
             canAttack = true; // 
         }

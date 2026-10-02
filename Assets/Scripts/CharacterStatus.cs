@@ -6,8 +6,9 @@ public class CharacterStatus : MonoBehaviour
     [SerializeField] private float maxHealth=100f;
     [SerializeField] private float currentHealth;
     [SerializeField] private float maxMana=100f;
-    private float currentMana;
+    [SerializeField] private float currentMana;
     public float CurrentHealth => currentHealth;
+    public float CurrentMana => currentMana;
 
     void Awake()
     {
@@ -52,6 +53,25 @@ public class CharacterStatus : MonoBehaviour
         else
         {
             Debug.Log($"Used {amount} mana. Current Mana: {currentMana}/{maxMana}");
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            TakeDamage(1f); // Take 10 damage from the enemy
+            //Destroy(other.gameObject); // Remove the enemy from the scene
+        }
+        else if (other.CompareTag("HealthPotion"))
+        {
+            Heal(20f); // Heal 20 health points
+            Destroy(other.gameObject); // Remove the potion from the scene
+        }
+        else if (other.CompareTag("ManaPotion"))
+        {
+            UseMana(-20f); // Restore 20 mana points
+            Destroy(other.gameObject); // Remove the potion from the scene
         }
     }
 }

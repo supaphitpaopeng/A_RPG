@@ -1,5 +1,73 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1793903363599166932
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7942457990316793465}
+    m_Modifications:
+    - target: {fileID: 707543826377321266, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_Name
+      value: TwinBlades
+      objectReference: {fileID: 0}
+    - target: {fileID: 707543826377321266, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372473912919890486, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1165
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372473912919890486, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0498
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372473912919890486, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0086
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372473912919890486, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.085743286
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372473912919890486, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7894884
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372473912919890486, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.017796544
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372473912919890486, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.6074862
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372473912919890486, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -9.033
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372473912919890486, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -255.50299
+      objectReference: {fileID: 0}
+    - target: {fileID: 5372473912919890486, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -175.582
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4228204624669592533, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+    - {fileID: 8430422155899705500, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+--- !u!4 &5939092415801489378 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5372473912919890486, guid: ad8a6563850bcb74b93dc969af898e74, type: 3}
+  m_PrefabInstance: {fileID: 1793903363599166932}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2406152453871325342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -137,7 +205,7 @@ PrefabInstance:
       addedObject: {fileID: 2970172293944794860}
     - targetCorrespondingSourceObject: {fileID: 6012286912827264864, guid: 6aed7d5a7a495f94d8d55a61815701c6, type: 3}
       insertIndex: 1
-      addedObject: {fileID: 2722100091036138046}
+      addedObject: {fileID: 5939092415801489378}
     - targetCorrespondingSourceObject: {fileID: 6012286912827264864, guid: 6aed7d5a7a495f94d8d55a61815701c6, type: 3}
       insertIndex: 2
       addedObject: {fileID: 2805434249041295221}
@@ -298,7 +366,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Skill
   leftSwordsObject: {fileID: 1169624469052417620}
   rightSwordsObject: {fileID: 2482604185405162582}
-  twinBladeObject: {fileID: 3354345203756703876}
+  twinBladeObject: {fileID: 0}
+  twinBladeSkillEData: {fileID: 0}
+  twinBladeSkillZData: {fileID: 0}
+  twinBladeSkillXData: {fileID: 0}
+  twinBladeSkillCData: {fileID: 0}
+  dualSwordsSkillEData: {fileID: 0}
+  dualSwordsSkillZData: {fileID: 0}
+  dualSwordsSkillXData: {fileID: 0}
+  dualSwordsSkillCData: {fileID: 0}
 --- !u!114 &5103966496954600329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,81 +390,11 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   maxMana: 100
+  currentMana: 0
 --- !u!4 &7942457990316793465 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6012286912827264864, guid: 6aed7d5a7a495f94d8d55a61815701c6, type: 3}
   m_PrefabInstance: {fileID: 4419905221736993049}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &4924146503789110663
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 7942457990316793465}
-    m_Modifications:
-    - target: {fileID: 7030333129509347257, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.059
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030333129509347257, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.0332
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030333129509347257, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.2022
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030333129509347257, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.79409444
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030333129509347257, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.0075600976
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030333129509347257, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.60537344
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030333129509347257, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.05366375
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030333129509347257, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -4.415
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030333129509347257, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -74.471
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030333129509347257, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -4.376
-      objectReference: {fileID: 0}
-    - target: {fileID: 7699767878981043459, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_Name
-      value: TwinBlades
-      objectReference: {fileID: 0}
-    - target: {fileID: 7699767878981043459, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
---- !u!4 &2722100091036138046 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7030333129509347257, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-  m_PrefabInstance: {fileID: 4924146503789110663}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3354345203756703876 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7699767878981043459, guid: 548f3d150b004254ba4536fbf9ab0c8c, type: 3}
-  m_PrefabInstance: {fileID: 4924146503789110663}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6803961731715011192
 PrefabInstance:
@@ -517,7 +523,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 940222696529104689, guid: 7d55f512dff621e42a80398403ba913e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

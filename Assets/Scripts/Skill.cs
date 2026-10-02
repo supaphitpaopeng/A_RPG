@@ -19,6 +19,17 @@ public class Skill : MonoBehaviour
     private bool isTwinBladeActive = true;
     public bool IsDualSwordsActive => isDualSwordsActive;
     public bool IsTwinBladeActive => isTwinBladeActive;
+    [Header("TwinBlade Skill Data")]
+    [SerializeField] private SkillData twinBladeSkillEData;
+    [SerializeField] private SkillData twinBladeSkillZData;
+    [SerializeField] private SkillData twinBladeSkillXData;
+    [SerializeField] private SkillData twinBladeSkillCData;
+    [Header("DualSwords Skill Data")]
+    [SerializeField] private SkillData dualSwordsSkillEData;
+    [SerializeField] private SkillData dualSwordsSkillZData;
+    [SerializeField] private SkillData dualSwordsSkillXData;
+    [SerializeField] private SkillData dualSwordsSkillCData;
+
 
     private void Awake()
     {
@@ -158,12 +169,20 @@ public class Skill : MonoBehaviour
 
     private void TwinBladeSkillE()
     {
-        canAttack = false;
-        if (clickToMove != null)
+        if (twinBladeSkillEData != null && characterStatus.CurrentMana >= twinBladeSkillEData.manaCost)
         {
-            clickToMove.StopMovement();
+            characterStatus.UseMana(twinBladeSkillEData.manaCost);
+            canAttack = false;
+            if (clickToMove != null)
+            {
+                clickToMove.StopMovement();
+            }
+            animator.SetTrigger("T_Attack_E");
         }
-        animator.SetTrigger("T_Attack_E");
+        else
+        {
+            Debug.Log("Not enough mana to use Twin Blade Skill E.");
+        }
     }
     private void TwinBladeSkillZ()
     {

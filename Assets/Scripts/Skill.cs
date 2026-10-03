@@ -6,6 +6,8 @@ public class Skill : MonoBehaviour
     Animator animator;
     ClickToMove clickToMove;
     CharacterStatus characterStatus;
+    EnemyHealth enemyHealth;
+    WeaponHitbox weaponHitbox;
     private bool canAttack = true;
     public bool CanAttack => canAttack;
     private bool canPotion = true;
@@ -24,11 +26,17 @@ public class Skill : MonoBehaviour
     [SerializeField] private SkillData twinBladeSkillZData;
     [SerializeField] private SkillData twinBladeSkillXData;
     [SerializeField] private SkillData twinBladeSkillCData;
+    [SerializeField] private SkillData twinBladeSkillNormalData;
     [Header("DualSwords Skill Data")]
     [SerializeField] private SkillData dualSwordsSkillEData;
     [SerializeField] private SkillData dualSwordsSkillZData;
     [SerializeField] private SkillData dualSwordsSkillXData;
     [SerializeField] private SkillData dualSwordsSkillCData;
+    [SerializeField] private SkillData dualSwordsSkillNormalData;
+
+    [Header("Weapon Hitbox Reference")]
+    [SerializeField] private WeaponHitbox activeWeaponHitbox;
+    
 
 
     private void Awake()
@@ -36,6 +44,7 @@ public class Skill : MonoBehaviour
         animator = GetComponent<Animator>();
         clickToMove = GetComponent<ClickToMove>();
         characterStatus = GetComponent<CharacterStatus>();
+        weaponHitbox = GetComponentInChildren<WeaponHitbox>();
     }
 
 
@@ -44,7 +53,7 @@ public class Skill : MonoBehaviour
     {
         keydownskill();
         
-        Debug.Log($"CanAttack: {canAttack}, CanPotion: {canPotion}");
+        //Debug.Log($"CanAttack: {canAttack}, CanPotion: {canPotion}");
 
 
     }
@@ -172,6 +181,7 @@ public class Skill : MonoBehaviour
         if (twinBladeSkillEData != null && characterStatus.CurrentMana >= twinBladeSkillEData.manaCost)
         {
             characterStatus.UseMana(twinBladeSkillEData.manaCost);
+            weaponHitbox.SetDamage(twinBladeSkillEData.baseDamage);
             canAttack = false;
             if (clickToMove != null)
             {
@@ -324,4 +334,12 @@ public class Skill : MonoBehaviour
         canPotion = true;
     }
 
+    public void ActivateHitbox()
+    {
+        weaponHitbox.EnableHitbox();
+    }
+    public void DeactivateHitbox()
+    {
+        weaponHitbox.DisableHitbox();
+    }
 }

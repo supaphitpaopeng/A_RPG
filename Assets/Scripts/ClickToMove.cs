@@ -9,6 +9,9 @@ public class ClickToMove : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float stoppingDistanse = 0.2f;
 
+    [Header("Target")]
+    [SerializeField] private Transform target;
+    [SerializeField] private float Range = 5f;
 
     NavMeshAgent agent;
     Camera mainCamera;
@@ -29,12 +32,13 @@ public class ClickToMove : MonoBehaviour
         if (Mouse.current == null) return;
         if (skill != null && (!skill.CanAttack || !skill.CanPotion)) return;
         
-            if (Mouse.current.leftButton.isPressed)
+            if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
                 Ray ray = mainCamera.ScreenPointToRay(mouseScreenPosition);
                 if (Physics.Raycast(ray, out RaycastHit hit, 200f, groundLayer))
                 {
+                    ClearTarget();
                     agent.SetDestination(hit.point);
                     if (skill.IsTwinBladeActive)
                     {
@@ -45,15 +49,35 @@ public class ClickToMove : MonoBehaviour
                     {
                         animator.SetBool("D_isWalking", true);
                     Debug.Log("Dual Swords Walking");
+                    }
                 }
-                    
-                    
-                }
-                
             }
-        
-        
 
+        if (Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
+            Ray ray = mainCamera.ScreenPointToRay(mouseScreenPosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 200f))
+            {
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    SetTarget(hit.collider.transform);
+                    Debug.Log("Locked target: " + target.name);
+                }
+                else
+                {
+                    // ถ้าคลิกขวาโดนอย่างอื่นที่ไม่ใช่ศัตรู ให้ปลดล็อกเป้า
+                    ClearTarget();
+                }
+            }
+            else
+            {
+                // ถ้าคลิกขวาโดนความว่างเปล่า ปลดล็อกเป้า
+                ClearTarget();
+            }
+        }
     }
 
     void Start()
@@ -65,6 +89,14 @@ public class ClickToMove : MonoBehaviour
     {
         HandleMouseMovement();
         UpdateAnimator();
+        if (target != null)
+        {
+            if (Vector3.Distance(transform.position, target.position) <= Range)
+            {
+                RotateTowardsTarget();
+            }
+            
+        }
     }
 
     private void UpdateAnimator()
@@ -76,10 +108,10 @@ public class ClickToMove : MonoBehaviour
         
         if(agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+            if (!agent.hasPath || agent.velocity.sqrMagnitude == 0)
             {
                 animator.SetBool("isWalking", false);
-                //Debug.Log("StopWalking");
+               // Debug.Log("StopWalking");
                 animator.SetBool("D_isWalking", false);
             }
         }
@@ -97,5 +129,36 @@ public class ClickToMove : MonoBehaviour
             animator.SetBool("isWalking", false);
             animator.SetBool("D_isWalking", false);
         }
+    }
+
+    public void Target(Vector3 targetPosition)
+    {
+        if (agent != null)
+        {
+            agent.SetDestination(targetPosition);
+        }
+    }
+
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+    }
+    public void RotateTowardsTarget()
+    {
+        if (target != null)
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            direction.y = 0f; // Keep the rotation only on the horizontal plane
+            if (direction != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            }
+        }
+    }
+
+    public void ClearTarget()
+    {
+        target = null;
     }
 }

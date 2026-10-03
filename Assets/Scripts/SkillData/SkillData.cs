@@ -7,4 +7,5 @@ public class SkillData : ScriptableObject
     public float manaCost;      // มานาที่ใช้
     public float baseDamage;    // ดาเมจพื้นฐาน
     public float coolDown;      // คูลดาวน์ (ถ้ามี)
+    public GameObject fxPrefab;
 }

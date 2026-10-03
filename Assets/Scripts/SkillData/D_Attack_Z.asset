@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f9d7013634d1ca4184a6c5095c76f28, type: 3}
+  m_Name: D_Attack_Z
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skillName: D_Attack_Z
+  manaCost: 20
+  baseDamage: 45
+  coolDown: 5
+  skillEffectPrefab: {fileID: 0}

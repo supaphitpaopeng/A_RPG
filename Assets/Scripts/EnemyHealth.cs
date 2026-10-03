@@ -40,12 +40,12 @@ public class EnemyHealth : MonoBehaviour
     {
         Destroy(gameObject); // ลบตัวมอนสเตอร์ (หลอดเลือดจะถูกลบไปด้วย)
     }
-
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Sword"))
         {
             TakeDamage(20f); // ตัวอย่าง: โดนโจมตีลดเลือด 20 หน่วย
         }
-    }
+    }*/
 }

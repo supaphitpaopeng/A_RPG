@@ -31,27 +31,27 @@ public class ClickToMove : MonoBehaviour
     {
         if (Mouse.current == null) return;
         if (skill != null && (!skill.CanAttack || !skill.CanPotion)) return;
-        
-            if (Mouse.current.leftButton.wasPressedThisFrame)
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
+            Ray ray = mainCamera.ScreenPointToRay(mouseScreenPosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 200f, groundLayer))
             {
-                Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
-                Ray ray = mainCamera.ScreenPointToRay(mouseScreenPosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, 200f, groundLayer))
+                ClearTarget();
+                agent.SetDestination(hit.point);
+                if (skill.IsTwinBladeActive)
                 {
-                    ClearTarget();
-                    agent.SetDestination(hit.point);
-                    if (skill.IsTwinBladeActive)
-                    {
-                        animator.SetBool("isWalking", true);
+                    animator.SetBool("isWalking", true);
                     Debug.Log("Twin Blade Walking");
-                    }
-                    else if (skill.IsDualSwordsActive)
-                    {
-                        animator.SetBool("D_isWalking", true);
+                }
+                else if (skill.IsDualSwordsActive)
+                {
+                    animator.SetBool("D_isWalking", true);
                     Debug.Log("Dual Swords Walking");
-                    }
                 }
             }
+        }
 
         if (Mouse.current.rightButton.wasPressedThisFrame)
         {
@@ -68,13 +68,11 @@ public class ClickToMove : MonoBehaviour
                 }
                 else
                 {
-                    // ถ้าคลิกขวาโดนอย่างอื่นที่ไม่ใช่ศัตรู ให้ปลดล็อกเป้า
                     ClearTarget();
                 }
             }
             else
             {
-                // ถ้าคลิกขวาโดนความว่างเปล่า ปลดล็อกเป้า
                 ClearTarget();
             }
         }
@@ -82,7 +80,7 @@ public class ClickToMove : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -95,23 +93,21 @@ public class ClickToMove : MonoBehaviour
             {
                 RotateTowardsTarget();
             }
-            
         }
     }
 
     private void UpdateAnimator()
     {
-        if(agent.pathPending)
+        if (agent.pathPending)
         {
             return;
         }
-        
-        if(agent.remainingDistance <= agent.stoppingDistance)
+
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
             if (!agent.hasPath || agent.velocity.sqrMagnitude == 0)
             {
                 animator.SetBool("isWalking", false);
-               // Debug.Log("StopWalking");
                 animator.SetBool("D_isWalking", false);
             }
         }
@@ -141,14 +137,31 @@ public class ClickToMove : MonoBehaviour
 
     public void SetTarget(Transform newTarget)
     {
+        ClearTarget();
+
         target = newTarget;
+
+        if (target != null)
+        {
+            Outline outline = target.GetComponent<Outline>();
+            if (outline == null)
+            {
+                outline = target.GetComponentInChildren<Outline>();
+            }
+
+            if (outline != null)
+            {
+                outline.enabled = true;
+            }
+        }
     }
+
     public void RotateTowardsTarget()
     {
         if (target != null)
         {
             Vector3 direction = (target.position - transform.position).normalized;
-            direction.y = 0f; // Keep the rotation only on the horizontal plane
+            direction.y = 0f;
             if (direction != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -159,6 +172,20 @@ public class ClickToMove : MonoBehaviour
 
     public void ClearTarget()
     {
+        if (target != null)
+        {
+            Outline outline = target.GetComponent<Outline>();
+            if (outline == null)
+            {
+                outline = target.GetComponentInChildren<Outline>();
+            }
+
+            if (outline != null)
+            {
+                outline.enabled = false;
+            }
+        }
+
         target = null;
     }
 }

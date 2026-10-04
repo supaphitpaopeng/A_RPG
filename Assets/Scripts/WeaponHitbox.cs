@@ -36,4 +36,10 @@ public class WeaponHitbox : MonoBehaviour
             canDealDamage = false;
         }
     }
+
+    private void Update()
+    {
+        Debug.Log("Current Damage: " + currentDamage);
+        Debug.Log("Can Deal Damage: " + canDealDamage);
+    }
 }

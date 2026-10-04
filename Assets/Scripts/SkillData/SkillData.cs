@@ -8,4 +8,7 @@ public class SkillData : ScriptableObject
     public float baseDamage;    // ดาเมจพื้นฐาน
     public float coolDown;      // คูลดาวน์ (ถ้ามี)
     public GameObject fxPrefab;
+    public GameObject fxPrefab01;
+    public GameObject fxPrefab02;
+    public GameObject fxPrefab03;
 }

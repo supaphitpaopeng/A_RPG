@@ -445,13 +445,6 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.9923954
-        functionName: ResetCanAttack
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0.08069164
         functionName: ActivateHitbox
         data: 
@@ -459,8 +452,29 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.33958617
+        functionName: TriggerSkillEffectEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.7319885
-        functionName: DisableHitbox
+        functionName: DeactivateHitbox
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9923954
+        functionName: ResetCanAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.10243902
+        functionName: TriggerSkillEffectEvent02
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

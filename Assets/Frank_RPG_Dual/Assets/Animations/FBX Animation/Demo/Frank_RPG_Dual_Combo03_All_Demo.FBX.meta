@@ -592,7 +592,7 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
-    motionNodeName: <Root Transform>
+    motionNodeName: root/ik_foot_root
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that might lower retargeting quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'thigh_l' has translation animation that will be discarded.\n\t'calf_l' has translation animation that will be discarded.\n\t'foot_l' has translation animation that will be discarded.\n\t'ball_l' has translation animation that will be discarded.\n\t'thigh_r' has translation animation that will be discarded.\n\t'calf_r' has translation animation that will be discarded.\n\t'foot_r' has translation animation that will be discarded.\n\t'ball_r' has translation animation that will be discarded.\n\t'spine_01' has translation animation that will be discarded.\n\t'spine_02' has translation animation that will be discarded.\n\t'spine_03' has translation animation that will be discarded.\n\t'upperarm_l' has translation animation that will be discarded.\n\t'lowerarm_l' has translation animation that will be discarded.\n\t'hand_l' has translation animation that will be discarded.\n\t'upperarm_r' has translation animation that will be discarded.\n\t'lowerarm_r' has translation animation that will be discarded.\n\t'hand_r' has translation animation that will be discarded.\n\t'neck_01' has translation animation that will be discarded.\n\t'head' has translation animation that will be discarded.\n"
     animationRetargetingWarnings: 
@@ -639,22 +639,57 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.9733841
-        functionName: ResetCanAttack
+      - time: 0.0046877493
+        functionName: TriggerSkillEffectEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.051873196
+      - time: 0.018920396
+        functionName: TriggerSkillEffectEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.021618418
         functionName: ActivateHitbox
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.22520913
+        functionName: TriggerSkillEffectEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.2498583
+        functionName: TriggerSkillEffectEvent2_2
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5597149
+        functionName: TriggerSkillEffectEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.8472622
-        functionName: DisableHitbox
+        functionName: DeactivateHitbox
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9733841
+        functionName: ResetCanAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

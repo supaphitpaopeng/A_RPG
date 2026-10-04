@@ -34,9 +34,23 @@ public class Skill : MonoBehaviour
     [SerializeField] private SkillData dualSwordsSkillCData;
     [SerializeField] private SkillData dualSwordsSkillNormalData;
 
+    [SerializeField] private SkillData transformSkillData;
+
     [Header("Weapon Hitbox Reference")]
     [SerializeField] private WeaponHitbox activeWeaponHitbox;
-    
+    private SkillData currentActiveSkillData;
+
+    private float AttackTime = 0f;
+    private float twinBladenextETime = 0f;
+    private float twinBladeNextZTime = 0f;
+    private float twinBladeNextXTime = 0f;
+    private float twinBladeNextCTime = 0f;
+    private float dualSwordsNextETime = 0f;
+    private float dualSwordsNextZTime = 0f;
+    private float dualSwordsNextXTime = 0f;
+    private float dualSwordsNextCTime = 0f;
+    private float TransformTime = 0f;
+
 
 
     private void Awake()
@@ -168,104 +182,45 @@ public class Skill : MonoBehaviour
     private void attackTwinBlade()
     {
         
-        if (clickToMove != null)
-        {
-            clickToMove.StopMovement();
-        }
-        
-        animator.SetTrigger("T_Attack1"); 
+        ExecuteSkill(twinBladeSkillNormalData, "T_Attack1", ref AttackTime);
     }
 
     private void TwinBladeSkillE()
     {
-        if (twinBladeSkillEData != null && characterStatus.CurrentMana >= twinBladeSkillEData.manaCost)
-        {
-            characterStatus.UseMana(twinBladeSkillEData.manaCost);
-            weaponHitbox.SetDamage(twinBladeSkillEData.baseDamage);
-            canAttack = false;
-            if (clickToMove != null)
-            {
-                clickToMove.StopMovement();
-            }
-            animator.SetTrigger("T_Attack_E");
-        }
-        else
-        {
-            Debug.Log("Not enough mana to use Twin Blade Skill E.");
-        }
+        ExecuteSkill(twinBladeSkillEData, "T_Attack_E", ref twinBladenextETime);
     }
     private void TwinBladeSkillZ()
     {
-        canAttack = false;
-        if (clickToMove != null)
-        {
-            clickToMove.StopMovement();
-        }
-        animator.SetTrigger("T_Attack_Z");
+        ExecuteSkill(twinBladeSkillZData, "T_Attack_Z", ref twinBladeNextZTime);
     }
     private void TwinBladeSkillX()
     {
-        canAttack = false;
-        if (clickToMove != null)
-        {
-            clickToMove.StopMovement();
-        }
-        animator.SetTrigger("T_Attack_X");
+        ExecuteSkill(twinBladeSkillXData, "T_Attack_X", ref twinBladeNextXTime);
     }
     private void TwinBladeSkillC()
     {
-        canAttack = false;
-        if (clickToMove != null)
-        {
-            clickToMove.StopMovement();
-        }
-        animator.SetTrigger("T_Attack_C");
+        ExecuteSkill(twinBladeSkillCData, "T_Attack_C", ref twinBladeNextCTime);
     }
 
     private void attackDualSwords()
     {
-        if (clickToMove != null)
-        {
-            clickToMove.StopMovement();
-        }
-
-        animator.SetTrigger("D_Attack1");
+        ExecuteSkill(dualSwordsSkillNormalData, "D_Attack1", ref AttackTime);
     }
     private void DualSwordsSkillE()
     {
-        canAttack = false;
-        if (clickToMove != null)
-        {
-            clickToMove.StopMovement();
-        }
-        animator.SetTrigger("D_Attack_E");
+        ExecuteSkill(dualSwordsSkillEData, "D_Attack_E", ref dualSwordsNextETime);
     }
     private void DualSwordsSkillZ()
     {
-        canAttack = false;
-        if (clickToMove != null)
-        {
-            clickToMove.StopMovement();
-        }
-        animator.SetTrigger("D_Attack_Z");
+        ExecuteSkill(dualSwordsSkillZData, "D_Attack_Z", ref dualSwordsNextZTime);
     }
     private void DualSwordsSkillX()
     {
-        canAttack = false;
-        if (clickToMove != null)
-        {
-            clickToMove.StopMovement();
-        }
-        animator.SetTrigger("D_Attack_X");
+        ExecuteSkill(dualSwordsSkillXData, "D_Attack_X", ref dualSwordsNextXTime);
     }
     private void DualSwordsSkillC()
     {
-        canAttack = false;
-        if (clickToMove != null)
-        {
-            clickToMove.StopMovement();
-        }
-        animator.SetTrigger("D_Attack_C");
+        ExecuteSkill(dualSwordsSkillCData, "D_Attack_C", ref dualSwordsNextCTime);
     }
 
     private void UsePotion()
@@ -280,20 +235,29 @@ public class Skill : MonoBehaviour
     }
 
     private void Transform()
-    {   
-        
-        if (!isDualSwordsActive && isTwinBladeActive)
-        { 
-            animator.SetBool("Transform", true);
-            canTransform = false;
-            clickToMove.StopMovement();
-            Debug.Log("Transforming to Dual Swords");
+    {  
+        if (Time.time < TransformTime)
+        {
+            Debug.Log($"Transform is on cooldown. Time remaining: {TransformTime - Time.time:F2} seconds.");
+            return;
         }
-        else
-        { 
-            animator.SetBool("Transform", false);
-            canTransform = true;
-            clickToMove.StopMovement();
+        if (transformSkillData != null && characterStatus.CurrentMana >= transformSkillData.manaCost)
+        {
+            characterStatus.UseMana(transformSkillData.manaCost);
+            TransformTime = Time.time + transformSkillData.coolDown;
+            if (!isDualSwordsActive && isTwinBladeActive)
+            {
+                animator.SetBool("Transform", true);
+                canTransform = false;
+                clickToMove.StopMovement();
+                Debug.Log("Transforming to Dual Swords");
+            }
+            else
+            {
+                animator.SetBool("Transform", false);
+                canTransform = true;
+                clickToMove.StopMovement();
+            }
         }
     }
 
@@ -316,6 +280,7 @@ public class Skill : MonoBehaviour
         isDualSwordsActive = true;
         isTwinBladeActive = false;  
     }
+
 
     public void ActivateCanAttack()
     {
@@ -342,4 +307,52 @@ public class Skill : MonoBehaviour
     {
         weaponHitbox.DisableHitbox();
     }
+
+    private void ExecuteSkill(SkillData skillData, string animTrigger, ref float nextSkillTime)
+    {
+        if (skillData == null) return;
+
+        // 1. เช็คคูลดาวน์
+        if (Time.time < nextSkillTime)
+        {
+            Debug.Log("Skill is on cooldown!");
+            return;
+        }
+
+        // 2. เช็คมานา
+        if (characterStatus != null)
+        {
+            if (characterStatus.CurrentMana < skillData.manaCost)
+            {
+                Debug.Log($"Not enough mana to use {skillData.skillName}.");
+                return;
+            }
+
+            characterStatus.UseMana(skillData.manaCost);
+            weaponHitbox.SetDamage(skillData.baseDamage);
+
+            // ตั้งค่าคูลดาวน์
+            nextSkillTime = Time.time + skillData.coolDown;
+        }
+
+        // 3. บันทึกข้อมูลสกิลนี้ไว้ให้ Animation Event เรียกใช้เอฟเฟกต์ถูกจังหวะ
+        currentActiveSkillData = skillData;
+
+        // 4. ล็อคการเคลื่อนไหวและสั่งเล่นอนิเมชัน
+        canAttack = false;
+        if (clickToMove != null) clickToMove.StopMovement();
+        animator.SetTrigger(animTrigger);
+    }
+    public void TriggerSkillEffectEvent()
+    {
+        if (currentActiveSkillData != null && currentActiveSkillData.fxPrefab != null)
+        {
+            // สร้างเอฟเฟกต์ตรงตำแหน่งตัวละคร (หรือปรับระยะหน้าตัวละครได้ด้วย transform.forward)
+            Vector3 spawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
+            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab, spawnPos, transform.rotation);
+            Destroy(fx, 2f);
+
+        }
+    }
+    
 }

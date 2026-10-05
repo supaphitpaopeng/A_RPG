@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f9d7013634d1ca4184a6c5095c76f28, type: 3}
+  m_Name: T_Attack_C
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skillName: T_Attack_C
+  manaCost: 70
+  baseDamage: 90
+  coolDown: 25
+  fxPrefab: {fileID: 1236453127613114, guid: b474edb7212ff004e915d411d0c34427, type: 3}
+  fxPrefab02: {fileID: 1171201465392465800, guid: cda94f5660ae7e349ac2fc796c4d5417, type: 3}

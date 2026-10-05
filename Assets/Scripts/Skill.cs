@@ -59,6 +59,9 @@ public class Skill : MonoBehaviour
         clickToMove = GetComponent<ClickToMove>();
         characterStatus = GetComponent<CharacterStatus>();
         weaponHitbox = GetComponentInChildren<WeaponHitbox>();
+        if (leftSwordsObject != null) leftSwordsObject.SetActive(false);
+        if (rightSwordsObject != null) rightSwordsObject.SetActive(false);
+        if (twinBladeObject != null) twinBladeObject.SetActive(true);
     }
 
 
@@ -208,6 +211,7 @@ public class Skill : MonoBehaviour
     }
     private void DualSwordsSkillE()
     {
+        Debug.Log("Dual Swords Skill E executed. Next available time: " + dualSwordsNextETime);
         ExecuteSkill(dualSwordsSkillEData, "D_Attack_E", ref dualSwordsNextETime);
     }
     private void DualSwordsSkillZ()
@@ -301,10 +305,13 @@ public class Skill : MonoBehaviour
 
     public void ActivateHitbox()
     {
+        Debug.Log("ActivateHitBox is called by: " + gameObject.name);
         weaponHitbox.EnableHitbox();
+        Debug.Log("CanDealDamage: " + weaponHitbox.CanDealDamage);
     }
     public void DeactivateHitbox()
     {
+        Debug.Log("DeactivateHitBox is called by: " + gameObject.name);
         weaponHitbox.DisableHitbox();
     }
 

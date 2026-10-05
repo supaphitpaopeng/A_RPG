@@ -21,7 +21,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateHealthUI();
-
+        Debug.Log("Enemy took damage:");
         if (currentHealth <= 0)
         {
             Die();

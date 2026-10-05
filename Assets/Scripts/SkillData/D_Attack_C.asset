@@ -16,4 +16,5 @@ MonoBehaviour:
   manaCost: 70
   baseDamage: 90
   coolDown: 25
-  skillEffectPrefab: {fileID: 0}
+  fxPrefab: {fileID: 6514232638294579907, guid: 134c00f8d6e514041971b209443e89fb, type: 3}
+  fxPrefab02: {fileID: 6514232638294579907, guid: d1e18773afdfd6e4ab644aa98d8d3f6c, type: 3}

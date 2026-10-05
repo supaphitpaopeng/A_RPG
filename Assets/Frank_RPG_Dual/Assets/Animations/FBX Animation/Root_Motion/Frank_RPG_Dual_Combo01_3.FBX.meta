@@ -646,15 +646,15 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.10662825
-        functionName: ActivateHitbox
+      - time: 0.7838617
+        functionName: DeactivateHitbox
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.7838617
-        functionName: DisableHitbox
+      - time: 0.15667312
+        functionName: ActivateHitbox
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

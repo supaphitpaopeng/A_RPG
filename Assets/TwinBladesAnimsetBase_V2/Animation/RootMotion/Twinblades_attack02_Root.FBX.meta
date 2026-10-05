@@ -453,7 +453,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.5475504
-        functionName: DisableHitbox
+        functionName: DeactivateHitbox
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

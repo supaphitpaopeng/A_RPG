@@ -354,5 +354,76 @@ public class Skill : MonoBehaviour
 
         }
     }
-    
+    public void TriggerSkillEffectEvent1_1()
+    {
+        if (currentActiveSkillData != null && currentActiveSkillData.fxPrefab01 != null)
+        {
+            // สร้างเอฟเฟกต์ตรงตำแหน่งตัวละคร (หรือปรับระยะหน้าตัวละครได้ด้วย transform.forward)
+            Vector3 spawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
+            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab01, spawnPos, transform.rotation);
+            Destroy(fx, 2f);
+
+        }
+    }
+    public void TriggerSkillEffectEvent_1()
+    {
+        if (currentActiveSkillData != null && currentActiveSkillData.fxPrefab != null)
+        {
+            Vector3 SpawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
+            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab, SpawnPos, transform.rotation);
+            Vector3 currentScale = fx.transform.localScale;
+            currentScale.x *= -1;
+            fx.transform.localScale = currentScale;
+            Destroy(fx, 2f);
+        }
+    }
+    public void TriggerSkillEffectEvent2_2()
+    {
+        if (currentActiveSkillData != null && currentActiveSkillData.fxPrefab02 != null)
+        {
+            // สร้างเอฟเฟกต์ตรงตำแหน่งตัวละคร (หรือปรับระยะหน้าตัวละครได้ด้วย transform.forward)
+            Vector3 spawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
+            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab02, spawnPos, transform.rotation);
+            Destroy(fx, 2f);
+
+        }
+    }
+    public void TriggerSkillEffectEvent02()
+    {
+        if (currentActiveSkillData != null && currentActiveSkillData.fxPrefab02 != null)
+        {
+            Vector3 SpawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
+            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab02, SpawnPos, transform.rotation);
+            Vector3 currentScale = fx.transform.localScale;
+            currentScale.x *= -1;
+            fx.transform.localScale = currentScale;
+            Destroy(fx, 2f);
+
+        }
+    }
+    public void TriggerSkillEffectEvent02_2()
+    {
+        if (currentActiveSkillData != null && currentActiveSkillData.fxPrefab03 != null)
+        {
+            Vector3 SpawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
+            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab03, SpawnPos, transform.rotation);
+            Vector3 currentScale = fx.transform.localScale;
+            currentScale.x *= -1;
+            fx.transform.localScale = currentScale;
+            Destroy(fx, 2f);
+
+        }
+    }
+
+    public void TriggerSkillEffectEvent02_1()
+    {
+        if (currentActiveSkillData != null && currentActiveSkillData.fxPrefab02 != null)
+        {
+            Vector3 spawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
+            Quaternion spawnRotation = transform.rotation * Quaternion.Euler(90, 0, 0);
+            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab02, spawnPos, spawnRotation);
+            Destroy(fx, 2f);
+        }
+    }
+
 }

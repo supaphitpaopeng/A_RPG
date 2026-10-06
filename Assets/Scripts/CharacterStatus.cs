@@ -1,4 +1,6 @@
+using Unity.AI.Assistant.Agents;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CharacterStatus : MonoBehaviour
 {
@@ -9,11 +11,14 @@ public class CharacterStatus : MonoBehaviour
     [SerializeField] private float currentMana;
     public float CurrentHealth => currentHealth;
     public float CurrentMana => currentMana;
+    Animator animator;
+    private bool isDead = false;
 
     void Awake()
     {
         currentHealth = maxHealth;
         currentMana = maxMana;
+        animator = GetComponent<Animator>();
     }
 
     public void Heal(float amount)
@@ -30,15 +35,12 @@ public class CharacterStatus : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        
+        Debug.Log("Enemy took damage:");
         if (currentHealth <= 0)
         {
-            currentHealth = 0;
-            //Debug.Log("Character is dead.");
-            // You can add death logic here, like triggering an animation or disabling the character.
-        }
-        else
-        {
-            //Debug.Log($"Took {amount} damage. Current Health: {currentHealth}/{maxHealth}");
+            Die();
         }
     }
 
@@ -55,23 +57,44 @@ public class CharacterStatus : MonoBehaviour
             //Debug.Log($"Used {amount} mana. Current Mana: {currentMana}/{maxMana}");
         }
     }
+    public void RestoreMana(float amount)
+    {
+        currentMana += amount;
+        if (currentMana > maxMana)
+        {
+            currentMana = maxMana;
+            //Debug.Log("Mana is full.");
+        }
+        else
+        {
+            //Debug.Log($"Restored {amount} mana. Current Mana: {currentMana}/{maxMana}");
+        }
+    }
+    public void Die()
+    {
+        if (isDead) return; // ป้องกันการเรียกฟังก์ชันตายซ้ำซ้อน
+        isDead = true;
 
+        Debug.Log("Character has died.");
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Death");
+        }
+
+        Collider col = GetComponent<Collider>();
+        if (col != null)
+        {
+            col.enabled = false;
+        }
+        Destroy(gameObject, 3f);
+    }
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
-            TakeDamage(1f); // Take 10 damage from the enemy
-            //Destroy(other.gameObject); // Remove the enemy from the scene
+            TakeDamage(5f); // ตัวอย่าง: โดนโจมตีลดเลือด 5 หน่วย
         }
-        else if (other.CompareTag("HealthPotion"))
-        {
-            Heal(20f); // Heal 20 health points
-            Destroy(other.gameObject); // Remove the potion from the scene
-        }
-        else if (other.CompareTag("ManaPotion"))
-        {
-            UseMana(-20f); // Restore 20 mana points
-            Destroy(other.gameObject); // Remove the potion from the scene
-        }
-    }
+    }*/
 }

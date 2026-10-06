@@ -8,6 +8,7 @@ public class Skill : MonoBehaviour
     CharacterStatus characterStatus;
     EnemyHealth enemyHealth;
     WeaponHitbox weaponHitbox;
+    Inventory inventory;
     private bool canAttack = true;
     public bool CanAttack => canAttack;
     private bool canPotion = true;
@@ -36,6 +37,10 @@ public class Skill : MonoBehaviour
 
     [SerializeField] private SkillData transformSkillData;
 
+    [Header("Potion Data")]
+    [SerializeField] private PotionData potionHealData;
+    [SerializeField] private PotionData potionManaData;
+
     [Header("Weapon Hitbox Reference")]
     [SerializeField] private WeaponHitbox activeWeaponHitbox;
     private SkillData currentActiveSkillData;
@@ -59,6 +64,7 @@ public class Skill : MonoBehaviour
         clickToMove = GetComponent<ClickToMove>();
         characterStatus = GetComponent<CharacterStatus>();
         weaponHitbox = GetComponentInChildren<WeaponHitbox>();
+        inventory = GetComponent<Inventory>();
         if (leftSwordsObject != null) leftSwordsObject.SetActive(false);
         if (rightSwordsObject != null) rightSwordsObject.SetActive(false);
         if (twinBladeObject != null) twinBladeObject.SetActive(true);
@@ -93,11 +99,29 @@ public class Skill : MonoBehaviour
             }
         }
 
-        if (Keyboard.current.fKey.wasPressedThisFrame)
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             if (canPotion && canAttack)
             {
-                UsePotion();
+                if (inventory.CurrentPotionHeal > 0)
+                {
+                    UsePotion(potionHealData);
+                    inventory.UsePotionHeal();
+                    Debug.Log($"Potion Heal Used. Current Health: {characterStatus.CurrentHealth}, Current Mana: {characterStatus.CurrentMana}");
+                }
+            }
+        }
+        
+        if (Keyboard.current.digit2Key.wasPressedThisFrame)
+        {
+            if (canPotion && canAttack)
+            {
+                if (inventory.CurrentPotionMana > 0)
+                {
+                    UsePotion(potionManaData);
+                    inventory.UsePotionMana();
+                    Debug.Log($"Potion Mana Used. Current Health: {characterStatus.CurrentHealth}, Current Mana: {characterStatus.CurrentMana}");
+                }
             }
         }
 
@@ -227,14 +251,15 @@ public class Skill : MonoBehaviour
         ExecuteSkill(dualSwordsSkillCData, "D_Attack_C", ref dualSwordsNextCTime);
     }
 
-    private void UsePotion()
+    private void UsePotion(PotionData potionData)
     {
         canPotion = false;
         if (clickToMove != null)
         {
             clickToMove.StopMovement();
         }
-        characterStatus.Heal(50f);
+        characterStatus.Heal(potionData.healAmount);
+        characterStatus.RestoreMana(potionData.manaAmount);
         animator.SetTrigger("Potion");
     }
 
@@ -431,6 +456,28 @@ public class Skill : MonoBehaviour
             GameObject fx = Instantiate(currentActiveSkillData.fxPrefab02, spawnPos, spawnRotation);
             Destroy(fx, 2f);
         }
+    }
+
+    public void ActivateSword()
+    {
+        if (isTwinBladeActive)
+        {
+            if (twinBladeObject != null) twinBladeObject.SetActive(true);
+            if (leftSwordsObject != null) leftSwordsObject.SetActive(false);
+            if (rightSwordsObject != null) rightSwordsObject.SetActive(false);
+        }
+        else if (isDualSwordsActive)
+        {
+            if (leftSwordsObject != null) leftSwordsObject.SetActive(true);
+            if (rightSwordsObject != null) rightSwordsObject.SetActive(true);
+            if (twinBladeObject != null) twinBladeObject.SetActive(false);
+        }
+    }
+    public void DeactivateSword()
+    {
+        if (twinBladeObject != null) twinBladeObject.SetActive(false);
+        if (leftSwordsObject != null) leftSwordsObject.SetActive(false);
+        if (rightSwordsObject != null) rightSwordsObject.SetActive(false);
     }
 
 }

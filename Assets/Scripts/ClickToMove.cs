@@ -80,10 +80,6 @@ public class ClickToMove : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        
-    }
 
     void Update()
     {

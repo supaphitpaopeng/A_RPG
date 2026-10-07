@@ -8,21 +8,23 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BLD_WindowGlass1
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: 4800000, guid: b81183c8b8a273c41b4eda33e86e0955, type: 3}
   m_Parent: {fileID: 2100000, guid: 67839f18cb008324fad823e901f01b33, type: 2}
-  m_ModifiedSerializedProperties: 0
+  m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
+  - _ALPHAPREMULTIPLY_ON
   - _DETAIL_MULX2
   - _EMISSION
-  - _METALLICSPECGLOSSMAP
+  - _METALLICGLOSSMAP
   - _NORMALMAP
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _METALLICSPECGLOSSMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap:
-    RenderType: Opaque
+    RenderType: Transparent
   disabledShaderPasses:
   - MOTIONVECTORS
   m_LockedProperties: 
@@ -60,8 +62,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _DetailNormalMapScale: 1
+    - _DstBlend: 10
     - _Glossiness: 1
     - _Mode: 3
+    - _ZWrite: 0
     m_Colors:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

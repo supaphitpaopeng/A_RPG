@@ -3,16 +3,22 @@ using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
+    Inventory inventory;
     public float maxHealth = 100f;
     public float currentHealth;
 
     [Header("UI Reference")]
     public Image healthBarFill; // ลาก Image ตัว Fill มาใส่
+    private float potionHealDropChance = 30f; // โอกาสในการดรอป Potion Heal (0-100)
+    private float potionManaDropChance = 30f; // โอกาสในการดรอป Potion Mana (0-100)
+
+
 
     void Start()
     {
         currentHealth = maxHealth;
         UpdateHealthUI();
+        inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
     }
 
     // เรียกฟังก์ชันนี้เวลาโดนโจมตี
@@ -25,6 +31,7 @@ public class EnemyHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+            Drop();
         }
     }
 
@@ -48,4 +55,18 @@ public class EnemyHealth : MonoBehaviour
             TakeDamage(20f); // ตัวอย่าง: โดนโจมตีลดเลือด 20 หน่วย
         }
     }*/
+    private void Drop()
+    {
+        float randomValue = Random.Range(0f, 100f);
+        Debug.Log("Random Value: " + randomValue);
+
+        if (randomValue < potionManaDropChance)
+        {
+            inventory.AddPotionMana();
+        }
+        else if (randomValue < potionManaDropChance + potionHealDropChance)
+        {
+            inventory.AddPotionHeal();
+        }
+    }
 }

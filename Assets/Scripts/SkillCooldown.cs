@@ -1,29 +1,39 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using TMPro; // รองรับ TextMeshPro
+using TMPro;
 
-public class SkillCooldown : MonoBehaviour, IPointerClickHandler
+public class SkillCooldown : MonoBehaviour
 {
-    [Header("UI Component")]
+    public enum SkillSlotType
+    {
+        Normal,
+        SkillE,
+        SkillZ,
+        SkillX,
+        SkillC,
+        Transform,
+        PotionHeal,
+        PotionMana
+    }
+
+    [Header("Slot Type")]
+    public SkillSlotType slotType;
+
+    [Header("UI Components")]
     public Image cooldownImage;
-    [Tooltip("ใส่ Text หรือ TextMeshPro เพื่อแสดงตัวเลขนับถอยหลัง")]
     public Text cooldownText;
     public TMP_Text cooldownTMP;
 
-    [Header("Cooldown Settings")]
-    public float cooldownTime = 5f;
-
-    [Header("Shortcut Key")]
-    [Tooltip("พิมพ์ตัวอักษรที่ต้องการใช้กด เช่น q, w, e, r, space, f")]
-    public string shortcutKey = "q";
+    [Header("Key Display")]
+    [Tooltip("ข้อความคีย์ลัดที่จะโชว์เมื่อสกิลพร้อมใช้ เช่น Space, E, Z, X, C, Q, 1, 2")]
+    public string keyText = "E";
 
     private float currentCooldownTimer = 0f;
+    private float maxCooldown = 0f;
     private bool isCooldown = false;
 
     void Awake()
     {
-        // ค้นหา Image ตัวลูกให้อัตโนมัติถ้าไม่ได้ลากใส่
         if (cooldownImage == null)
         {
             Image[] images = GetComponentsInChildren<Image>();
@@ -37,93 +47,100 @@ public class SkillCooldown : MonoBehaviour, IPointerClickHandler
             }
         }
 
-        // ค้นหา Text ตัวลูกให้อัตโนมัติ
         if (cooldownText == null) cooldownText = GetComponentInChildren<Text>();
         if (cooldownTMP == null) cooldownTMP = GetComponentInChildren<TMP_Text>();
     }
 
+    void OnEnable()
+    {
+        RegisterWithPlayer();
+    }
+
     void Start()
     {
-        if (cooldownImage != null)
-        {
-            cooldownImage.fillAmount = 0f;
-        }
+        if (cooldownImage != null) cooldownImage.fillAmount = 0f;
+        ShowKeyText();
+        RegisterWithPlayer();
+    }
 
-        // ซ่อนข้อความคูลดาวน์ตอนเริ่มเกม
-        UpdateCooldownText("");
+    public void RegisterWithPlayer()
+    {
+        Skill playerSkill = FindObjectOfType<Skill>();
+        if (playerSkill != null)
+        {
+            playerSkill.RegisterUICooldown(slotType, this);
+        }
     }
 
     void Update()
     {
-        // ตรวจจับการกดคีย์ตามตัวอักษรที่พิมพ์ไว้
-        if (!string.IsNullOrEmpty(shortcutKey))
-        {
-            try
-            {
-                if (Input.GetKeyDown(shortcutKey.ToLower()))
-                {
-                    UseSkill();
-                }
-            }
-            catch
-            {
-                // ป้องกันกรณีพิมพ์ชื่อคีย์ผิด
-            }
-        }
-
         if (isCooldown)
         {
             currentCooldownTimer -= Time.deltaTime;
 
-            if (cooldownImage != null)
+            if (cooldownImage != null && maxCooldown > 0)
             {
-                cooldownImage.fillAmount = currentCooldownTimer / cooldownTime;
+                cooldownImage.fillAmount = currentCooldownTimer / maxCooldown;
             }
 
-            // อัปเดตตัวเลขนับถอยหลัง (แสดงทศนิยม 1 ตำแหน่ง เช่น 4.2)
-            UpdateCooldownText(Mathf.Max(0, currentCooldownTimer).ToString("F1"));
+            UpdateText(Mathf.Max(0, currentCooldownTimer).ToString("F1"));
 
             if (currentCooldownTimer <= 0f)
             {
                 isCooldown = false;
                 currentCooldownTimer = 0f;
 
-                if (cooldownImage != null)
-                {
-                    cooldownImage.fillAmount = 0f;
-                }
+                if (cooldownImage != null) cooldownImage.fillAmount = 0f;
 
-                // เคลียร์ข้อความออกเมื่อคูลดาวน์เสร็จ
-                UpdateCooldownText("");
+                ShowKeyText();
             }
         }
     }
 
-    private void UpdateCooldownText(string text)
+    public void StartCooldown(float duration)
+    {
+        if (duration <= 0f) return;
+
+        maxCooldown = duration;
+        currentCooldownTimer = duration;
+        isCooldown = true;
+
+        if (cooldownImage != null) cooldownImage.fillAmount = 1f;
+        UpdateText(duration.ToString("F1"));
+    }
+
+    private void ShowKeyText()
+    {
+        UpdateText(keyText);
+    }
+
+    private void UpdateText(string text)
     {
         if (cooldownText != null) cooldownText.text = text;
         if (cooldownTMP != null) cooldownTMP.text = text;
     }
 
-    public void UseSkill()
+    public void SetSkillIcon(Sprite newIcon)
     {
-        if (isCooldown) return;
+        if (newIcon == null) return;
 
-        Debug.Log(gameObject.name + " ใช้งานสกิล!");
-
-        isCooldown = true;
-        currentCooldownTimer = cooldownTime;
-
-        if (cooldownImage != null)
+        // 1. เปลี่ยนรูปทุก Image ในวัตถุนี้และวัตถุลูก (ถ้าไม่ใช่ Cooldown Overlay)
+        Image[] images = GetComponentsInChildren<Image>(true);
+        foreach (Image img in images)
         {
-            cooldownImage.fillAmount = 1f;
+            if (img != cooldownImage)
+            {
+                img.sprite = newIcon;
+                img.color = Color.white; // รีเซ็ตสีไม่ให้ย้อมเป็นสีน้ำเงิน/ดำ
+            }
         }
 
-        UpdateCooldownText(cooldownTime.ToString("F1"));
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        UseSkill();
+        // 2. เปลี่ยนรูปทุก RawImage ในวัตถุนี้และวัตถุลูก
+        RawImage[] rawImages = GetComponentsInChildren<RawImage>(true);
+        foreach (RawImage rawImg in rawImages)
+        {
+            rawImg.texture = newIcon.texture;
+            rawImg.color = Color.white;
+        }
     }
 }

@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: DualSwordsSkillNormal
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
   skillName: DualSwordsSkillNormal
+  skillIcon: {fileID: 7939073551320688562, guid: bba97ed155bb220479f1b36a8aee02c5, type: 3}
+  secondarySkillIcon: {fileID: 0}
   manaCost: 0
   baseDamage: 10
   coolDown: 0
   fxPrefab: {fileID: 0}
+  fxPrefab01: {fileID: 0}
+  fxPrefab02: {fileID: 0}
+  fxPrefab03: {fileID: 0}

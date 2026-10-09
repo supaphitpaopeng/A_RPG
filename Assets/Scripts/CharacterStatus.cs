@@ -11,6 +11,9 @@ public class CharacterStatus : MonoBehaviour
     [SerializeField] private float currentMana;
     public float CurrentHealth => currentHealth;
     public float CurrentMana => currentMana;
+    public float MaxHealth => maxHealth;
+    public float MaxMana => maxMana;
+
     Animator animator;
     private bool isDead = false;
 

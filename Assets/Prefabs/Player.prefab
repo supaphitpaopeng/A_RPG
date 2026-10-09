@@ -1797,6 +1797,7 @@ GameObject:
   - component: {fileID: 1348667318180631125}
   - component: {fileID: 3539886232326930186}
   - component: {fileID: 5103966496954600329}
+  - component: {fileID: 3382496663408610853}
   - component: {fileID: 347322983311724475}
   m_Layer: 0
   m_Name: Player
@@ -1958,7 +1959,15 @@ MonoBehaviour:
   dualSwordsSkillZData: {fileID: 11400000, guid: 1e64f49d63b3b9044af01036bf3e6eb0, type: 2}
   dualSwordsSkillXData: {fileID: 11400000, guid: f0af8885855525644827c070482a052f, type: 2}
   dualSwordsSkillCData: {fileID: 11400000, guid: accf774e5248f964b902c84c0676217b, type: 2}
-  dualSwordsSkillNormalData: {fileID: 11400000, guid: 9f97c0055e11d654d8abd35b48cca938, type: 2}
+  dualSwordsSkillNormalData: {fileID: 11400000, guid: 6e1dec5f9ee931146841530cdd85bea8, type: 2}
+  normalSkillCooldownUI: {fileID: 0}
+  skillECooldownUI: {fileID: 0}
+  skillZCooldownUI: {fileID: 0}
+  skillXCooldownUI: {fileID: 0}
+  skillCCooldownUI: {fileID: 0}
+  transformCooldownUI: {fileID: 0}
+  potionHealCooldownUI: {fileID: 0}
+  potionManaCooldownUI: {fileID: 0}
   transformSkillData: {fileID: 11400000, guid: 80049ea8333a98741bb6cc4763e5068b, type: 2}
   potionHealData: {fileID: 11400000, guid: b1b1548df63c3c9478fc04f09cfb89a0, type: 2}
   potionManaData: {fileID: 11400000, guid: a0381c105f426054f977813f09b54729, type: 2}
@@ -1977,8 +1986,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStatus
   maxHealth: 100
   currentHealth: 0
-  maxMana: 100
+  maxMana: 200
   currentMana: 0
+--- !u!114 &3382496663408610853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4439657559001690908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee863e5d4a17994997563447426bb40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUIManager
+  characterStatus: {fileID: 5103966496954600329}
+  healthBarImage: {fileID: 0}
+  manaBarImage: {fileID: 0}
 --- !u!114 &347322983311724475
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: Transform
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
   skillName: Transform
+  skillIcon: {fileID: 8385444829561404995, guid: 6683d0695b51f4f46be135c98f08615a, type: 3}
+  secondarySkillIcon: {fileID: 7613476290688851205, guid: 5671b0eb6b853e04595e276977fbfc88, type: 3}
   manaCost: 100
   baseDamage: 0
   coolDown: 10
-  skillEffectPrefab: {fileID: 0}
+  fxPrefab: {fileID: 0}
+  fxPrefab01: {fileID: 0}
+  fxPrefab02: {fileID: 0}
+  fxPrefab03: {fileID: 0}

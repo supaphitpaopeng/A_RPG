@@ -1141,6 +1141,28 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 6ca6f28a905189243bb74a3dd804b6a4, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &1428166940 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6501339951449236262, guid: 29204ebab112ab44e8ea687329175956, type: 3}
+  m_PrefabInstance: {fileID: 1817900779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &1571229516 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6970356209640413680, guid: 29204ebab112ab44e8ea687329175956, type: 3}
+  m_PrefabInstance: {fileID: 1817900779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!114 &1639032720 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7540616996529817918, guid: 29204ebab112ab44e8ea687329175956, type: 3}
@@ -1290,110 +1312,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1239768381759506150, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2482604185405162582, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3086531039158006237, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3353881425682712699, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: Range
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3354345203756703876, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3539886232326930186, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: twinBladeObject
+    - target: {fileID: 3382496663408610853, guid: 659d26e3d393c0c4598899049adc2f67, type: 3}
+      propertyPath: manaBarImage
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3539886232326930186, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: transformSkillData
+      objectReference: {fileID: 1428166940}
+    - target: {fileID: 3382496663408610853, guid: 659d26e3d393c0c4598899049adc2f67, type: 3}
+      propertyPath: healthBarImage
       value: 
-      objectReference: {fileID: 11400000, guid: 80049ea8333a98741bb6cc4763e5068b, type: 2}
-    - target: {fileID: 3539886232326930186, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: twinBladeSkillCData
-      value: 
-      objectReference: {fileID: 11400000, guid: e1e151b8ebe318e43a39c8491cc6d3fb, type: 2}
-    - target: {fileID: 3539886232326930186, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: twinBladeSkillEData
-      value: 
-      objectReference: {fileID: 11400000, guid: 79988f2d8da1ae84c8752676818d5f40, type: 2}
-    - target: {fileID: 3539886232326930186, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: twinBladeSkillXData
-      value: 
-      objectReference: {fileID: 11400000, guid: 33a0de27f28d03947b089432c672cd94, type: 2}
-    - target: {fileID: 3539886232326930186, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: twinBladeSkillZData
-      value: 
-      objectReference: {fileID: 11400000, guid: fce105a46cac0e1488cacffb7271854d, type: 2}
-    - target: {fileID: 3539886232326930186, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: dualSwordsSkillCData
-      value: 
-      objectReference: {fileID: 11400000, guid: accf774e5248f964b902c84c0676217b, type: 2}
-    - target: {fileID: 3539886232326930186, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: dualSwordsSkillEData
-      value: 
-      objectReference: {fileID: 11400000, guid: d615adfb03ced104d8f77c4eaa72ccf8, type: 2}
-    - target: {fileID: 3539886232326930186, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: dualSwordsSkillXData
-      value: 
-      objectReference: {fileID: 11400000, guid: f0af8885855525644827c070482a052f, type: 2}
-    - target: {fileID: 3539886232326930186, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: dualSwordsSkillZData
-      value: 
-      objectReference: {fileID: 11400000, guid: 1e64f49d63b3b9044af01036bf3e6eb0, type: 2}
-    - target: {fileID: 3951633432355547558, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3951633432355547558, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3951633432355547558, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3951633432355547558, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3951633432355547558, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3951633432355547558, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3951633432355547558, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3951633432355547558, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3951633432355547558, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 3951633432355547558, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4562008323435331352, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: a77df324224e3eb43924579902bfc0e5, type: 2}
+      objectReference: {fileID: 1571229516}
     - target: {fileID: 3539886232326930186, guid: 659d26e3d393c0c4598899049adc2f67, type: 3}
       propertyPath: skillCCooldownUI
       value: 
@@ -1426,10 +1352,6 @@ PrefabInstance:
       propertyPath: normalSkillCooldownUI
       value: 
       objectReference: {fileID: 410111839}
-    - target: {fileID: 3539886232326930186, guid: 659d26e3d393c0c4598899049adc2f67, type: 3}
-      propertyPath: dualSwordsSkillNormalData
-      value: 
-      objectReference: {fileID: 11400000, guid: 6e1dec5f9ee931146841530cdd85bea8, type: 2}
     - target: {fileID: 3951633432355547558, guid: 659d26e3d393c0c4598899049adc2f67, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.059102684
@@ -1474,14 +1396,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4439657559001690908, guid: 659d26e3d393c0c4598899049adc2f67, type: 3}
-      propertyPath: m_TagString
-      value: Player
+    - target: {fileID: 5103966496954600329, guid: 659d26e3d393c0c4598899049adc2f67, type: 3}
+      propertyPath: maxMana
+      value: 200
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 0}
-    m_RemovedGameObjects:
-    - {fileID: 1239768381759506150, guid: 56901302a21d5594b97428ad20dd9763, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 659d26e3d393c0c4598899049adc2f67, type: 3}

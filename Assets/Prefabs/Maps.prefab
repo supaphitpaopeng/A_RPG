@@ -1023,7 +1023,7 @@ PrefabInstance:
     - target: {fileID: 4073895223504185114, guid: f8baae2fc90f72c44945dc0692153478, type: 3}
       propertyPath: m_TerrainData
       value: 
-      objectReference: {fileID: 15600000, guid: 0ebd28dc7b0c8f54080ae4c0f7559b12, type: 2}
+      objectReference: {fileID: 15600000, guid: 2718aca1615fab740b5f09c037f1d922, type: 2}
     - target: {fileID: 5881097958708404934, guid: f8baae2fc90f72c44945dc0692153478, type: 3}
       propertyPath: m_LocalPosition.x
       value: -105.160446
@@ -1067,7 +1067,7 @@ PrefabInstance:
     - target: {fileID: 7537354838652262189, guid: f8baae2fc90f72c44945dc0692153478, type: 3}
       propertyPath: m_TerrainData
       value: 
-      objectReference: {fileID: 15600000, guid: 0ebd28dc7b0c8f54080ae4c0f7559b12, type: 2}
+      objectReference: {fileID: 15600000, guid: 2718aca1615fab740b5f09c037f1d922, type: 2}
     - target: {fileID: 7537354838652262189, guid: f8baae2fc90f72c44945dc0692153478, type: 3}
       propertyPath: m_MaterialTemplate
       value: 

@@ -24,13 +24,17 @@ public class SkillCooldown : MonoBehaviour
     public Text cooldownText;
     public TMP_Text cooldownTMP;
 
+    [Header("Disabled Indicator")]
+    [Tooltip("ใส่ GameObject รูปกากบาทสีแดงที่นี่")]
+    public GameObject disabledCrossImage;
+
     [Header("Key Display")]
-    [Tooltip("ข้อความคีย์ลัดที่จะโชว์เมื่อสกิลพร้อมใช้ เช่น Space, E, Z, X, C, Q, 1, 2")]
     public string keyText = "E";
 
     private float currentCooldownTimer = 0f;
     private float maxCooldown = 0f;
     private bool isCooldown = false;
+    private Inventory playerInventory;
 
     void Awake()
     {
@@ -59,7 +63,8 @@ public class SkillCooldown : MonoBehaviour
     void Start()
     {
         if (cooldownImage != null) cooldownImage.fillAmount = 0f;
-        ShowKeyText();
+        FindInventoryReference();
+        ShowDefaultText();
         RegisterWithPlayer();
     }
 
@@ -69,6 +74,19 @@ public class SkillCooldown : MonoBehaviour
         if (playerSkill != null)
         {
             playerSkill.RegisterUICooldown(slotType, this);
+            if (playerInventory == null)
+            {
+                playerInventory = playerSkill.GetComponent<Inventory>();
+            }
+        }
+    }
+
+    private void FindInventoryReference()
+    {
+        if (playerInventory == null)
+        {
+            Inventory inv = FindObjectOfType<Inventory>();
+            if (inv != null) playerInventory = inv;
         }
     }
 
@@ -83,7 +101,8 @@ public class SkillCooldown : MonoBehaviour
                 cooldownImage.fillAmount = currentCooldownTimer / maxCooldown;
             }
 
-            UpdateText(Mathf.Max(0, currentCooldownTimer).ToString("F1"));
+            // แสดงตัวเลขนับถอยหลังคูลดาวน์
+            UpdateText(Mathf.CeilToInt(currentCooldownTimer).ToString());
 
             if (currentCooldownTimer <= 0f)
             {
@@ -92,7 +111,15 @@ public class SkillCooldown : MonoBehaviour
 
                 if (cooldownImage != null) cooldownImage.fillAmount = 0f;
 
-                ShowKeyText();
+                ShowDefaultText();
+            }
+        }
+        else
+        {
+            // คอยอัปเดตจำนวนยาและกากบาทแบบ Realtime
+            if (slotType == SkillSlotType.PotionHeal || slotType == SkillSlotType.PotionMana)
+            {
+                ShowDefaultText();
             }
         }
     }
@@ -106,11 +133,50 @@ public class SkillCooldown : MonoBehaviour
         isCooldown = true;
 
         if (cooldownImage != null) cooldownImage.fillAmount = 1f;
-        UpdateText(duration.ToString("F1"));
+
+        // ขณะติดคูลดาวน์ ซ่อนกากบาทออกก่อนเพื่อแสดงเงาดำ/ตัวเลขคูลดาวน์
+        if (disabledCrossImage != null) disabledCrossImage.SetActive(false);
+
+        EnableTextObject(true);
+        UpdateText(Mathf.CeilToInt(duration).ToString());
     }
 
-    private void ShowKeyText()
+    private void ShowDefaultText()
     {
+        EnableTextObject(true);
+
+        if (playerInventory != null)
+        {
+            float itemCount = 0f;
+            bool isPotionSlot = false;
+
+            if (slotType == SkillSlotType.PotionHeal)
+            {
+                itemCount = playerInventory.CurrentPotionHeal;
+                isPotionSlot = true;
+            }
+            else if (slotType == SkillSlotType.PotionMana)
+            {
+                itemCount = playerInventory.CurrentPotionMana;
+                isPotionSlot = true;
+            }
+
+            if (isPotionSlot)
+            {
+                // แปลงค่า float เป็น int ตอนแสดงผลข้อความเพื่อป้องกัน Error
+                int displayAmount = Mathf.FloorToInt(itemCount);
+                UpdateText(displayAmount.ToString());
+
+                // แสดงกากบาทเมื่อไอเทมเหลือ 0 และไม่ได้ติดคูลดาวน์อยู่
+                if (disabledCrossImage != null && !isCooldown)
+                {
+                    disabledCrossImage.SetActive(displayAmount <= 0);
+                }
+                return;
+            }
+        }
+
+        if (disabledCrossImage != null) disabledCrossImage.SetActive(false);
         UpdateText(keyText);
     }
 
@@ -120,27 +186,44 @@ public class SkillCooldown : MonoBehaviour
         if (cooldownTMP != null) cooldownTMP.text = text;
     }
 
+    private void EnableTextObject(bool enable)
+    {
+        if (cooldownText != null) cooldownText.gameObject.SetActive(enable);
+        if (cooldownTMP != null) cooldownTMP.gameObject.SetActive(enable);
+    }
+
     public void SetSkillIcon(Sprite newIcon)
     {
         if (newIcon == null) return;
 
-        // 1. เปลี่ยนรูปทุก Image ในวัตถุนี้และวัตถุลูก (ถ้าไม่ใช่ Cooldown Overlay)
         Image[] images = GetComponentsInChildren<Image>(true);
         foreach (Image img in images)
         {
-            if (img != cooldownImage)
+            if (img != cooldownImage && (disabledCrossImage == null || img.gameObject != disabledCrossImage))
             {
                 img.sprite = newIcon;
-                img.color = Color.white; // รีเซ็ตสีไม่ให้ย้อมเป็นสีน้ำเงิน/ดำ
+                img.color = Color.white;
             }
         }
 
-        // 2. เปลี่ยนรูปทุก RawImage ในวัตถุนี้และวัตถุลูก
         RawImage[] rawImages = GetComponentsInChildren<RawImage>(true);
         foreach (RawImage rawImg in rawImages)
         {
             rawImg.texture = newIcon.texture;
             rawImg.color = Color.white;
         }
+    }
+
+    public void ResetCooldown()
+    {
+        isCooldown = false;
+        currentCooldownTimer = 0f;
+
+        if (cooldownImage != null)
+        {
+            cooldownImage.fillAmount = 0f;
+        }
+
+        ShowDefaultText();
     }
 }

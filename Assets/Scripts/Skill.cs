@@ -125,6 +125,13 @@ public class Skill : MonoBehaviour
 
     public void UpdateSkillIcons()
     {
+        // ล้างคูลดาวน์เก่าของปุ่มสกิล E, Z, X, C, Normal เมื่อเปลี่ยนสาย
+        if (skillECooldownUI != null) skillECooldownUI.ResetCooldown();
+        if (skillZCooldownUI != null) skillZCooldownUI.ResetCooldown();
+        if (skillXCooldownUI != null) skillXCooldownUI.ResetCooldown();
+        if (skillCCooldownUI != null) skillCCooldownUI.ResetCooldown();
+        if (normalSkillCooldownUI != null) normalSkillCooldownUI.ResetCooldown();
+
         if (isTwinBladeActive)
         {
             if (skillECooldownUI != null && twinBladeSkillEData != null) skillECooldownUI.SetSkillIcon(twinBladeSkillEData.skillIcon);

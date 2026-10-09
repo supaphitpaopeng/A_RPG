@@ -461,13 +461,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.92387956, z: -0.38268343, w: 0}
-  m_LocalPosition: {x: -52.361217, y: 2.1499996, z: -15.038088}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 45, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,7 +482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraMove
   playerTransform: {fileID: 346418156}
   smoothSpeed: 10
-  offset: {x: 0, y: 3, z: 0}
+  offset: {x: 0, y: 8, z: -6}
 --- !u!1001 &1183891983
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -542,7 +542,7 @@ PrefabInstance:
     - target: {fileID: 7673475722904741006, guid: 173c6532576f9274cb780755af65e9c6, type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: 9916bf4c4acd54d47b72f1a7d90db518, type: 2}
+      objectReference: {fileID: 23800000, guid: b1740fab2661b1745949e7bcc2c2e6cd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

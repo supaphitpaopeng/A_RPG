@@ -9,6 +9,10 @@ public class Skill : MonoBehaviour
     EnemyHealth enemyHealth;
     WeaponHitbox weaponHitbox;
     Inventory inventory;
+
+    [Header("Sound Reference")]
+    [SerializeField] private PlayerSoundManager soundManager;
+
     private bool canAttack = true;
     public bool CanAttack => canAttack;
     private bool canPotion = true;
@@ -69,7 +73,6 @@ public class Skill : MonoBehaviour
     private float dualSwordsNextCTime = 0f;
     private float TransformTime = 0f;
 
-    // --- ตัวแปรล็อกคูลดาวน์ยา ---
     private float nextPotionHealTime = 0f;
     private float nextPotionManaTime = 0f;
 
@@ -80,6 +83,12 @@ public class Skill : MonoBehaviour
         characterStatus = GetComponent<CharacterStatus>();
         weaponHitbox = GetComponentInChildren<WeaponHitbox>();
         inventory = GetComponent<Inventory>();
+
+        if (soundManager == null)
+        {
+            soundManager = GetComponent<PlayerSoundManager>();
+        }
+
         if (leftSwordsObject != null) leftSwordsObject.SetActive(false);
         if (rightSwordsObject != null) rightSwordsObject.SetActive(false);
         if (twinBladeObject != null) twinBladeObject.SetActive(true);
@@ -94,38 +103,20 @@ public class Skill : MonoBehaviour
     {
         switch (slotType)
         {
-            case SkillCooldown.SkillSlotType.Normal:
-                normalSkillCooldownUI = uiSlot;
-                break;
-            case SkillCooldown.SkillSlotType.SkillE:
-                skillECooldownUI = uiSlot;
-                break;
-            case SkillCooldown.SkillSlotType.SkillZ:
-                skillZCooldownUI = uiSlot;
-                break;
-            case SkillCooldown.SkillSlotType.SkillX:
-                skillXCooldownUI = uiSlot;
-                break;
-            case SkillCooldown.SkillSlotType.SkillC:
-                skillCCooldownUI = uiSlot;
-                break;
-            case SkillCooldown.SkillSlotType.Transform:
-                transformCooldownUI = uiSlot;
-                break;
-            case SkillCooldown.SkillSlotType.PotionHeal:
-                potionHealCooldownUI = uiSlot;
-                break;
-            case SkillCooldown.SkillSlotType.PotionMana:
-                potionManaCooldownUI = uiSlot;
-                break;
+            case SkillCooldown.SkillSlotType.Normal: normalSkillCooldownUI = uiSlot; break;
+            case SkillCooldown.SkillSlotType.SkillE: skillECooldownUI = uiSlot; break;
+            case SkillCooldown.SkillSlotType.SkillZ: skillZCooldownUI = uiSlot; break;
+            case SkillCooldown.SkillSlotType.SkillX: skillXCooldownUI = uiSlot; break;
+            case SkillCooldown.SkillSlotType.SkillC: skillCCooldownUI = uiSlot; break;
+            case SkillCooldown.SkillSlotType.Transform: transformCooldownUI = uiSlot; break;
+            case SkillCooldown.SkillSlotType.PotionHeal: potionHealCooldownUI = uiSlot; break;
+            case SkillCooldown.SkillSlotType.PotionMana: potionManaCooldownUI = uiSlot; break;
         }
-
         UpdateSkillIcons();
     }
 
     public void UpdateSkillIcons()
     {
-        // ล้างคูลดาวน์เก่าของปุ่มสกิล E, Z, X, C, Normal เมื่อเปลี่ยนสาย
         if (skillECooldownUI != null) skillECooldownUI.ResetCooldown();
         if (skillZCooldownUI != null) skillZCooldownUI.ResetCooldown();
         if (skillXCooldownUI != null) skillXCooldownUI.ResetCooldown();
@@ -139,11 +130,7 @@ public class Skill : MonoBehaviour
             if (skillXCooldownUI != null && twinBladeSkillXData != null) skillXCooldownUI.SetSkillIcon(twinBladeSkillXData.skillIcon);
             if (skillCCooldownUI != null && twinBladeSkillCData != null) skillCCooldownUI.SetSkillIcon(twinBladeSkillCData.skillIcon);
             if (normalSkillCooldownUI != null && twinBladeSkillNormalData != null) normalSkillCooldownUI.SetSkillIcon(twinBladeSkillNormalData.skillIcon);
-
-            if (transformCooldownUI != null && transformSkillData != null)
-            {
-                transformCooldownUI.SetSkillIcon(transformSkillData.skillIcon);
-            }
+            if (transformCooldownUI != null && transformSkillData != null) transformCooldownUI.SetSkillIcon(transformSkillData.skillIcon);
         }
         else if (isDualSwordsActive)
         {
@@ -152,11 +139,7 @@ public class Skill : MonoBehaviour
             if (skillXCooldownUI != null && dualSwordsSkillXData != null) skillXCooldownUI.SetSkillIcon(dualSwordsSkillXData.skillIcon);
             if (skillCCooldownUI != null && dualSwordsSkillCData != null) skillCCooldownUI.SetSkillIcon(dualSwordsSkillCData.skillIcon);
             if (normalSkillCooldownUI != null && dualSwordsSkillNormalData != null) normalSkillCooldownUI.SetSkillIcon(dualSwordsSkillNormalData.skillIcon);
-
-            if (transformCooldownUI != null && transformSkillData != null)
-            {
-                transformCooldownUI.SetSkillIcon(transformSkillData.secondarySkillIcon);
-            }
+            if (transformCooldownUI != null && transformSkillData != null) transformCooldownUI.SetSkillIcon(transformSkillData.secondarySkillIcon);
         }
     }
 
@@ -166,28 +149,16 @@ public class Skill : MonoBehaviour
         {
             if (canAttack && canPotion)
             {
-                if (isTwinBladeActive)
-                {
-                    attackTwinBlade();
-                }
-                else if (isDualSwordsActive)
-                {
-                    attackDualSwords();
-                }
+                if (isTwinBladeActive) attackTwinBlade();
+                else if (isDualSwordsActive) attackDualSwords();
             }
         }
 
-        // --- Potion Heal (ปุ่ม 1) ---
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             if (canPotion && canAttack)
             {
-                if (Time.time < nextPotionHealTime)
-                {
-                    Debug.Log("Potion Heal is on cooldown!");
-                    return;
-                }
-
+                if (Time.time < nextPotionHealTime) return;
                 if (inventory != null && inventory.CurrentPotionHeal > 0)
                 {
                     UsePotion(potionHealData, ref nextPotionHealTime, potionHealCooldownUI);
@@ -196,17 +167,11 @@ public class Skill : MonoBehaviour
             }
         }
 
-        // --- Potion Mana (ปุ่ม 2) ---
         if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
             if (canPotion && canAttack)
             {
-                if (Time.time < nextPotionManaTime)
-                {
-                    Debug.Log("Potion Mana is on cooldown!");
-                    return;
-                }
-
+                if (Time.time < nextPotionManaTime) return;
                 if (inventory != null && inventory.CurrentPotionMana > 0)
                 {
                     UsePotion(potionManaData, ref nextPotionManaTime, potionManaCooldownUI);
@@ -260,95 +225,55 @@ public class Skill : MonoBehaviour
         }
     }
 
-    private void attackTwinBlade()
-    {
-        ExecuteSkill(twinBladeSkillNormalData, "T_Attack1", ref AttackTime, normalSkillCooldownUI);
-    }
+    private void attackTwinBlade() => ExecuteSkill(twinBladeSkillNormalData, "T_Attack1", ref AttackTime, normalSkillCooldownUI, -1);
+    private void TwinBladeSkillE() => ExecuteSkill(twinBladeSkillEData, "T_Attack_E", ref twinBladenextETime, skillECooldownUI, 0);
+    private void TwinBladeSkillZ() => ExecuteSkill(twinBladeSkillZData, "T_Attack_Z", ref twinBladeNextZTime, skillZCooldownUI, 1);
+    private void TwinBladeSkillX() => ExecuteSkill(twinBladeSkillXData, "T_Attack_X", ref twinBladeNextXTime, skillXCooldownUI, 2);
+    private void TwinBladeSkillC() => ExecuteSkill(twinBladeSkillCData, "T_Attack_C", ref twinBladeNextCTime, skillCCooldownUI, 3);
 
-    private void TwinBladeSkillE()
-    {
-        ExecuteSkill(twinBladeSkillEData, "T_Attack_E", ref twinBladenextETime, skillECooldownUI);
-    }
+    private void attackDualSwords() => ExecuteSkill(dualSwordsSkillNormalData, "D_Attack1", ref AttackTime, normalSkillCooldownUI, -1);
+    private void DualSwordsSkillE() => ExecuteSkill(dualSwordsSkillEData, "D_Attack_E", ref dualSwordsNextETime, skillECooldownUI, 0);
+    private void DualSwordsSkillZ() => ExecuteSkill(dualSwordsSkillZData, "D_Attack_Z", ref dualSwordsNextZTime, skillZCooldownUI, 1);
+    private void DualSwordsSkillX() => ExecuteSkill(dualSwordsSkillXData, "D_Attack_X", ref dualSwordsNextXTime, skillXCooldownUI, 2);
+    private void DualSwordsSkillC() => ExecuteSkill(dualSwordsSkillCData, "D_Attack_C", ref dualSwordsNextCTime, skillCCooldownUI, 3);
 
-    private void TwinBladeSkillZ()
-    {
-        ExecuteSkill(twinBladeSkillZData, "T_Attack_Z", ref twinBladeNextZTime, skillZCooldownUI);
-    }
-
-    private void TwinBladeSkillX()
-    {
-        ExecuteSkill(twinBladeSkillXData, "T_Attack_X", ref twinBladeNextXTime, skillXCooldownUI);
-    }
-
-    private void TwinBladeSkillC()
-    {
-        ExecuteSkill(twinBladeSkillCData, "T_Attack_C", ref twinBladeNextCTime, skillCCooldownUI);
-    }
-
-    private void attackDualSwords()
-    {
-        ExecuteSkill(dualSwordsSkillNormalData, "D_Attack1", ref AttackTime, normalSkillCooldownUI);
-    }
-
-    private void DualSwordsSkillE()
-    {
-        ExecuteSkill(dualSwordsSkillEData, "D_Attack_E", ref dualSwordsNextETime, skillECooldownUI);
-    }
-
-    private void DualSwordsSkillZ()
-    {
-        ExecuteSkill(dualSwordsSkillZData, "D_Attack_Z", ref dualSwordsNextZTime, skillZCooldownUI);
-    }
-
-    private void DualSwordsSkillX()
-    {
-        ExecuteSkill(dualSwordsSkillXData, "D_Attack_X", ref dualSwordsNextXTime, skillXCooldownUI);
-    }
-
-    private void DualSwordsSkillC()
-    {
-        ExecuteSkill(dualSwordsSkillCData, "D_Attack_C", ref dualSwordsNextCTime, skillCCooldownUI);
-    }
-
-    private void ExecuteSkill(SkillData skillData, string animTrigger, ref float nextSkillTime, SkillCooldown uiSlot = null)
+    private void ExecuteSkill(SkillData skillData, string animTrigger, ref float nextSkillTime, SkillCooldown uiSlot = null, int skillIndex = -1)
     {
         if (skillData == null) return;
-
-        if (Time.time < nextSkillTime)
-        {
-            Debug.Log("Skill is on cooldown!");
-            return;
-        }
+        if (Time.time < nextSkillTime) return;
 
         if (characterStatus != null)
         {
-            if (characterStatus.CurrentMana < skillData.manaCost)
-            {
-                Debug.Log($"Not enough mana to use {skillData.skillName}.");
-                return;
-            }
+            if (characterStatus.CurrentMana < skillData.manaCost) return;
 
             characterStatus.UseMana(skillData.manaCost);
             if (weaponHitbox != null) weaponHitbox.SetDamage(skillData.baseDamage);
 
             nextSkillTime = Time.time + skillData.coolDown;
-
-            if (uiSlot != null)
-            {
-                uiSlot.StartCooldown(skillData.coolDown);
-            }
+            if (uiSlot != null) uiSlot.StartCooldown(skillData.coolDown);
         }
 
         currentActiveSkillData = skillData;
         canAttack = false;
         if (clickToMove != null) clickToMove.StopMovement();
         animator.SetTrigger(animTrigger);
+
+        if (soundManager != null)
+        {
+            if (skillIndex == -1)
+            {
+                soundManager.PlayNormalAttack(isDualSwordsActive);
+            }
+            else
+            {
+                soundManager.PlaySkillSound(isDualSwordsActive, skillIndex);
+            }
+        }
     }
 
     private void UsePotion(PotionData potionData, ref float nextPotionTime, SkillCooldown uiSlot = null)
     {
         if (potionData == null) return;
-
         canPotion = false;
         if (clickToMove != null) clickToMove.StopMovement();
 
@@ -358,20 +283,12 @@ public class Skill : MonoBehaviour
 
         float cdDuration = (potionData.coolDown > 0) ? potionData.coolDown : 2.0f;
         nextPotionTime = Time.time + cdDuration;
-
-        if (uiSlot != null)
-        {
-            uiSlot.StartCooldown(cdDuration);
-        }
+        if (uiSlot != null) uiSlot.StartCooldown(cdDuration);
     }
 
     private void Transform()
     {
-        if (Time.time < TransformTime)
-        {
-            Debug.Log($"Transform is on cooldown. Time remaining: {TransformTime - Time.time:F2} seconds.");
-            return;
-        }
+        if (Time.time < TransformTime) return;
 
         if (transformSkillData != null && characterStatus.CurrentMana >= transformSkillData.manaCost)
         {
@@ -385,16 +302,24 @@ public class Skill : MonoBehaviour
 
             if (!isDualSwordsActive && isTwinBladeActive)
             {
+                isDualSwordsActive = true;
+                isTwinBladeActive = false;
                 animator.SetBool("Transform", true);
-                canTransform = false;
-                if (clickToMove != null) clickToMove.StopMovement();
             }
             else
             {
+                isDualSwordsActive = false;
+                isTwinBladeActive = true;
                 animator.SetBool("Transform", false);
-                canTransform = true;
-                if (clickToMove != null) clickToMove.StopMovement();
             }
+
+            if (soundManager != null)
+            {
+                soundManager.ToggleStance(isDualSwordsActive);
+            }
+
+            canTransform = false;
+            if (clickToMove != null) clickToMove.StopMovement();
         }
     }
 
@@ -405,7 +330,6 @@ public class Skill : MonoBehaviour
         if (twinBladeObject != null) twinBladeObject.SetActive(true);
         isDualSwordsActive = false;
         isTwinBladeActive = true;
-
         UpdateSkillIcons();
     }
 
@@ -416,7 +340,6 @@ public class Skill : MonoBehaviour
         if (twinBladeObject != null) twinBladeObject.SetActive(false);
         isDualSwordsActive = true;
         isTwinBladeActive = false;
-
         UpdateSkillIcons();
     }
 
@@ -452,8 +375,8 @@ public class Skill : MonoBehaviour
     {
         if (currentActiveSkillData != null && currentActiveSkillData.fxPrefab != null)
         {
-            Vector3 SpawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
-            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab, SpawnPos, transform.rotation);
+            Vector3 spawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
+            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab, spawnPos, transform.rotation);
             Vector3 currentScale = fx.transform.localScale;
             currentScale.x *= -1;
             fx.transform.localScale = currentScale;
@@ -475,8 +398,8 @@ public class Skill : MonoBehaviour
     {
         if (currentActiveSkillData != null && currentActiveSkillData.fxPrefab02 != null)
         {
-            Vector3 SpawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
-            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab02, SpawnPos, transform.rotation);
+            Vector3 spawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
+            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab02, spawnPos, transform.rotation);
             Vector3 currentScale = fx.transform.localScale;
             currentScale.x *= -1;
             fx.transform.localScale = currentScale;
@@ -488,8 +411,8 @@ public class Skill : MonoBehaviour
     {
         if (currentActiveSkillData != null && currentActiveSkillData.fxPrefab03 != null)
         {
-            Vector3 SpawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
-            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab03, SpawnPos, transform.rotation);
+            Vector3 spawnPos = transform.position + transform.forward * 1.0f + Vector3.up;
+            GameObject fx = Instantiate(currentActiveSkillData.fxPrefab03, spawnPos, transform.rotation);
             Vector3 currentScale = fx.transform.localScale;
             currentScale.x *= -1;
             fx.transform.localScale = currentScale;

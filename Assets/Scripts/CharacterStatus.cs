@@ -5,14 +5,17 @@ using UnityEngine.AI;
 public class CharacterStatus : MonoBehaviour
 {
     [Header("Character Status")]
-    [SerializeField] private float maxHealth=100f;
+    [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth;
-    [SerializeField] private float maxMana=100f;
+    [SerializeField] private float maxMana = 100f;
     [SerializeField] private float currentMana;
     public float CurrentHealth => currentHealth;
     public float CurrentMana => currentMana;
     public float MaxHealth => maxHealth;
     public float MaxMana => maxMana;
+
+    [Header("Sound Reference")]
+    [SerializeField] private PlayerSoundManager soundManager; // เชื่อมโยงกับ PlayerSoundManager
 
     Animator animator;
     private bool isDead = false;
@@ -22,6 +25,12 @@ public class CharacterStatus : MonoBehaviour
         currentHealth = maxHealth;
         currentMana = maxMana;
         animator = GetComponent<Animator>();
+
+        // ถ้าไม่ได้ลากใส่ใน Inspector ให้ดึงจากตัวละครอัตโนมัติ
+        if (soundManager == null)
+        {
+            soundManager = GetComponent<PlayerSoundManager>();
+        }
     }
 
     public void Heal(float amount)
@@ -32,6 +41,13 @@ public class CharacterStatus : MonoBehaviour
             currentHealth = maxHealth;
             Debug.Log("Health is full.");
         }
+
+        // สั่งเล่นเสียงกินยาเพิ่มเลือด
+        if (soundManager != null)
+        {
+            soundManager.PlayHealthPotion();
+        }
+
         //Debug.Log($"Healed {amount} points. Current Health: {currentHealth}/{maxHealth}");
     }
 
@@ -39,7 +55,7 @@ public class CharacterStatus : MonoBehaviour
     {
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        
+
         Debug.Log("Enemy took damage:");
         if (currentHealth <= 0)
         {
@@ -60,6 +76,7 @@ public class CharacterStatus : MonoBehaviour
             //Debug.Log($"Used {amount} mana. Current Mana: {currentMana}/{maxMana}");
         }
     }
+
     public void RestoreMana(float amount)
     {
         currentMana += amount;
@@ -68,11 +85,16 @@ public class CharacterStatus : MonoBehaviour
             currentMana = maxMana;
             //Debug.Log("Mana is full.");
         }
-        else
+
+        // สั่งเล่นเสียงกินยาเพิ่มมานา
+        if (soundManager != null)
         {
-            //Debug.Log($"Restored {amount} mana. Current Mana: {currentMana}/{maxMana}");
+            soundManager.PlayManaPotion();
         }
+
+        //Debug.Log($"Restored {amount} mana. Current Mana: {currentMana}/{maxMana}");
     }
+
     public void Die()
     {
         if (isDead) return; // ป้องกันการเรียกฟังก์ชันตายซ้ำซ้อน
@@ -92,12 +114,4 @@ public class CharacterStatus : MonoBehaviour
         }
         Destroy(gameObject, 3f);
     }
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            TakeDamage(5f); // ตัวอย่าง: โดนโจมตีลดเลือด 5 หน่วย
-        }
-    }*/
 }

@@ -1,5 +1,6 @@
-fileFormatVersion: 2
-guid: 8c148c36fbdbb1b4fa4e197935a6c600
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1041 &1
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -208,7 +209,37 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+      - name: Take 001
+        lockRootRotation: 0
+        lockRootHeightSimulate: 0
+        lockRootPosition: 0
+        highlight: 0
+        keepOriginalOrientation: 0
+        keepOriginalPositionY: 1
+        keepOriginalPositionXZ: 0
+        heightFromFeet: 0
+        mirror: 0
+        bodyMask: 0
+        events:
+          - time: 0.40932643
+            functionName: ActivateHitbox
+            data: 
+            objectReferenceParameter: {instanceID: 0}
+            floatParameter: 0
+            intParameter: 0
+            messageOptions: 0
+          - time: 0.6735751
+            functionName: DeactivateHitbox
+            data: 
+            objectReferenceParameter: {instanceID: 0}
+            floatParameter: 0
+            intParameter: 0
+            messageOptions: 0
+        transformMask: []
+        maskType: 3
+        maskSource: {instanceID: 0}
+        additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

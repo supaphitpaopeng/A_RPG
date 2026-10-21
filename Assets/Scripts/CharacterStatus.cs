@@ -1,6 +1,4 @@
-using Unity.AI.Assistant.Agents;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class CharacterStatus : MonoBehaviour
 {

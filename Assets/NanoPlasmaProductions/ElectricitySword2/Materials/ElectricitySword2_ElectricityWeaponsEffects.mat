@@ -96,7 +96,7 @@ Material:
     - _AO_Strength: 1
     - _Alpha: 1
     - _Ambient_Occlusion_Strength: 1
-    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _Brightness: 4.5
     - _Brightness_1: 23.78

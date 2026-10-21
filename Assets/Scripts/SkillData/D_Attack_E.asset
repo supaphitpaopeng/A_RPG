@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: D_Attack_E
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
   skillName: D_Attack_E
+  skillIcon: {fileID: 9084830369248594494, guid: a9374ddfc931dbf41a67df009e452ddc, type: 3}
+  secondarySkillIcon: {fileID: 0}
   manaCost: 10
   baseDamage: 30
   coolDown: 3
   fxPrefab: {fileID: 6514232638294579907, guid: 134c00f8d6e514041971b209443e89fb, type: 3}
+  fxPrefab01: {fileID: 0}
   fxPrefab02: {fileID: 0}
+  fxPrefab03: {fileID: 0}

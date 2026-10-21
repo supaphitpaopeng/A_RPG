@@ -4,9 +4,11 @@ using UnityEngine;
 public class SkillData : ScriptableObject
 {
     public string skillName;
-    public float manaCost;      // มานาที่ใช้
-    public float baseDamage;    // ดาเมจพื้นฐาน
-    public float coolDown;      // คูลดาวน์ (ถ้ามี)
+    public Sprite skillIcon;          // ไอคอนหลัก (หรือไอคอนสำหรับ Twin Blade)
+    public Sprite secondarySkillIcon; // <-- เพิ่มช่องไอคอนสำรอง (สำหรับ Dual Swords)
+    public float manaCost;
+    public float baseDamage;
+    public float coolDown;
     public GameObject fxPrefab;
     public GameObject fxPrefab01;
     public GameObject fxPrefab02;

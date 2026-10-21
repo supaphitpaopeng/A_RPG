@@ -3663,7 +3663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 100
   currentHealth: 0
-  healthBarFill: {fileID: 1734168071207973337}
+  healthBarFill: {fileID: 649221009194844581}
 --- !u!54 &7035251819944489349
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8202,9 +8202,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05c618b9b41d81c43b58f315c8be2775, type: 3}
---- !u!114 &1734168071207973337 stripped
+--- !u!114 &649221009194844581 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3085008653416308896, guid: 05c618b9b41d81c43b58f315c8be2775, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4306383229868953820, guid: 05c618b9b41d81c43b58f315c8be2775, type: 3}
   m_PrefabInstance: {fileID: 3657247984754512249}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

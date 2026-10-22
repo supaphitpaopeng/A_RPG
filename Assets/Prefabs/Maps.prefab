@@ -1014,12 +1014,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2990668555219525334, guid: f8baae2fc90f72c44945dc0692153478, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2990668555219525334, guid: f8baae2fc90f72c44945dc0692153478, type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: 8533c8f14e3dc4f46933e4ab563d62b9, type: 2}
+      objectReference: {fileID: 23800000, guid: b1740fab2661b1745949e7bcc2c2e6cd, type: 2}
     - target: {fileID: 4073895223504185114, guid: f8baae2fc90f72c44945dc0692153478, type: 3}
       propertyPath: m_TerrainData
       value: 
@@ -1075,6 +1075,10 @@ PrefabInstance:
     - target: {fileID: 8637942864979875707, guid: f8baae2fc90f72c44945dc0692153478, type: 3}
       propertyPath: m_Name
       value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637942864979875707, guid: f8baae2fc90f72c44945dc0692153478, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

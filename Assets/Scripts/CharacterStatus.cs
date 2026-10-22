@@ -105,6 +105,12 @@ public class CharacterStatus : MonoBehaviour
             animator.SetTrigger("Death");
         }
 
+        GameManager gm = FindObjectOfType<GameManager>();
+        if (gm != null)
+        {
+            gm.TriggerGameOver();
+        }
+
         Collider col = GetComponent<Collider>();
         if (col != null)
         {

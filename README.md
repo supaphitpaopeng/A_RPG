@@ -13,9 +13,3 @@
 | 67114640795 | นายเอกภูมิ เกษี | **Developer / Code**<br>- เขียนโปรแกรมและพัฒนาระบบหลัก (Core Logic/Code)<br>- ตรวจสอบและแก้ไขข้อผิดพลาดของระบบ (Debugging) |
 
 ---
-
-## 🚀 วิธีการติดตั้งและใช้งาน (Getting Started)
-
-1. Clone Repository นี้ลงเครื่อง:
-   ```bash
-   git clone [https://github.com/](https://github.com/)[username]/[repository-name].git

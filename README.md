@@ -13,3 +13,5 @@
 | 67114640795 | นายเอกภูมิ เกษี | **Developer / Code**<br>- เขียนโปรแกรมและพัฒนาระบบหลัก (Core Logic/Code)<br>- ตรวจสอบและแก้ไขข้อผิดพลาดของระบบ (Debugging) |
 
 ---
+หากไฟล์ terrain มีปัญหาให้โหลดจาลิ้งนี้
+https://drive.google.com/drive/folders/1FHK-hxYocxsOrz6dBeZG7Pv4FnDgryVR?usp=sharing
